@@ -1,5 +1,75 @@
-﻿<h3>ViewVehiclesComponent</h3>
+﻿@using BreezeManagement.CoreBusiness
+@inject IViewVehiclesByNameUseCase ViewVehiclesByNameUseCase
+
+<div class="input-group mb-3">
+    <input type="text"
+           class="form-control form-control-lg"
+           placeholder="Type vehicle name here to search"
+           @bind-value="vehicleNameToSearch"
+           @bind-value:event="oninput" />
+    <button type="button" class="input-group-text btn-success"
+            @onclick="@( async()=> { await ViewVehicles(); } )">
+        View
+    </button>
+</div>
+@if (this.DisplaySearchResult && _vehicles != null && selectedVehicle == null)
+{
+    <div style="overflow-y:auto; max-height:300px; border:1px solid silver; padding-top:5px">
+        <ul style="list-style-type:none">
+            @foreach (var veh in _vehicles)
+            {
+                <li style="cursor:pointer" @onclick="@(async() => { await SelectVehicle(veh); })"
+            @key="veh.VehicleId">@veh.Registration</li>
+            }
+        </ul>
+    </div>
+}
 
 @code {
+    private string? _vehicleNameToSearch;
+    public string vehicleNameToSearch
+    {
+        get => _vehicleNameToSearch;
+        set
+        {
+            _vehicleNameToSearch = value;
+            if (!string.IsNullOrWhiteSpace(_vehicleNameToSearch) &&
+                _vehicleNameToSearch.Length > 2)
+            {
+                ViewVehicles();
+            }
+        }
+    }
+
+    private List<Vehicle>? _vehicles;
+    private Vehicle? selectedVehicle;
+
+    [Parameter]
+    public EventCallback<List<Vehicle>> OnSearchVehicles { get; set; }
+
+    [Parameter]
+    public bool DisplaySearchResult { get; set; } = false;
+
+    [Parameter]
+    public EventCallback<Vehicle> OnSelectVehicle { get; set; }
+
+    private async Task ViewVehicles()
+    {
+        var vehicles = (await ViewVehiclesByNameUseCase
+        .ExecuteAsync(vehicleNameToSearch ?? string.Empty)).ToList();
+
+        await OnSearchVehicles.InvokeAsync(vehicles);
+        _vehicles = vehicles;
+        this.selectedVehicle = null;
+
+        StateHasChanged();
+
+    }
+
+    private async Task SelectVehicle(Vehicle vehicle)
+    {
+        await OnSelectVehicle.InvokeAsync(vehicle);
+        selectedVehicle = vehicle;
+    }
 
 }

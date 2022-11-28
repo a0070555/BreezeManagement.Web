@@ -1,5 +1,84 @@
-﻿<h3>EditVehicle</h3>
+﻿@page "/editvehicle/{id:int}"
+
+@*@attribute [Authorize]*@
+
+@inject NavigationManager NavigationManager
+@inject IViewVehiclesByIdUseCase ViewVehicleByIdUseCase
+@inject IEditVehicleUseCase EditVehicleUseCase
+
+<h3>Edit Vehicle</h3>
+<br/>
+@if (this.vehicle != null)
+{
+    <EditForm Model="vehicle" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <label for="name">Registration</label>
+            <InputText id="name" @bind-Value="vehicle.Registration" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="model">Quantity</label>
+            <InputText id="model" @bind-Value="vehicle.ModelName" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="colour">Colour</label>
+            <InputText id="colour" @bind-Value="vehicle.Colour" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price</label>
+            <InputNumber id="price" @bind-Value="vehicle.Price" class="form-control"></InputNumber>
+        </div>
+
+        <div class="form-group">
+            <label for="dom">Date Of Manufacture</label>
+            <InputDate id="dom" @bind-Value="vehicle.DateOfManufacture" class="form-control"></InputDate>
+        </div>
+
+        <div class="form-group">
+            <label for="owners">Number Of Owners</label>
+            <InputNumber id="owners" @bind-Value="vehicle.NumberOfOwners" class="form-control"></InputNumber>
+        </div>
+
+        <div class="form-group">
+            <label for="miles">Mileage</label>
+            <InputNumber id="miles" @bind-Value="vehicle.Mileage" class="form-control"></InputNumber>
+        </div>
+
+        <VehicleFeaturesComponent
+            VehicleFeatures="vehicle.VehicleFeatures"
+            OnFeatureSelected="OnFeatureSelected"
+        ></VehicleFeaturesComponent>
+
+        <br />
+        <button type="submit" class="btn btn-primary">Save</button>
+
+    </EditForm>
+}
 
 @code {
+    private Vehicle vehicle;
 
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        this.vehicle = await ViewVehicleByIdUseCase.ExecuteAsync(this.Id);
+    }
+
+    private void OnFeatureSelected(List<VehicleFeature> vehicleFeatures)
+    {
+        this.vehicle.VehicleFeatures = vehicleFeatures;
+    }
+
+    private void OnValidSubmit()
+    {
+        EditVehicleUseCase.ExecuteAsync(this.vehicle);
+        NavigationManager.NavigateTo("/vehicles");
+    }
 }

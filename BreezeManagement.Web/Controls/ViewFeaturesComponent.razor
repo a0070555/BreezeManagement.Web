@@ -1,5 +1,74 @@
-﻿<h3>ViewFeaturesComponent</h3>
+﻿@using BreezeManagement.CoreBusiness
+@inject IViewFeaturesByNameUseCase ViewFeaturesByNameUseCase
+
+<div class="input-group">
+    <input type="text"
+           class="form-control form-control-lg"
+           placeholder="Type feature name here to search"
+           @bind-value="featureNameToSearch"
+           bind-value:event="oninput" />
+    <button type="button" class="input-group-text btn-success"
+            @onclick="@( async()=> { await ViewFeatures(); } )">
+        View
+    </button>
+</div>
+@if (this.DisplaySearchResult && _features != null && selectedFeature == null)
+{
+    <div style="overflow-y:auto; max-height:300px; border:1px solid silver; padding-top:5px">
+        <ul style="list-style-type:none">
+            @foreach (var feat in _features)
+            {
+                <li style="cursor:pointer" @onclick="@(async() => { await SelectFeature(feat); })"
+            @key="feat.FeatureId">@feat.FeatureName</li>
+            }
+        </ul>
+    </div>
+}
 
 @code {
+    private string? _featureNameToSearch;
+    public string? featureNameToSearch
+    {
+        get => _featureNameToSearch;
+        set
+        {
+            _featureNameToSearch = value;
+            if (!string.IsNullOrWhiteSpace(_featureNameToSearch) &&
+                _featureNameToSearch.Length > 2)
+            {
+                ViewFeatures();
+            }
+        }
+    }
+
+    private List<Feature>? _features;
+    private Feature? selectedFeature;
+
+    [Parameter]
+    public EventCallback<List<Feature>> OnSearchFeatures { get; set; }
+
+    [Parameter]
+    public EventCallback<Feature> OnSelectFeature { get; set; }
+
+    [Parameter]
+    public bool DisplaySearchResult { get; set; } = false;
+
+    private async Task ViewFeatures()
+    {
+        var features = (await ViewFeaturesByNameUseCase
+        .ExecuteAsync(featureNameToSearch ?? string.Empty)).ToList();
+
+        await OnSearchFeatures.InvokeAsync(features);
+        _features = features;
+        this.selectedFeature = null;
+
+        StateHasChanged();
+    }
+
+    private async Task SelectFeature(Feature feature)
+    {
+        await OnSelectFeature.InvokeAsync(feature);
+        selectedFeature = feature;
+    }
 
 }
