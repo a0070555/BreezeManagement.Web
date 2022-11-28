@@ -1,0 +1,28 @@
+﻿@inject NavigationManager NavigationManager
+
+
+@if (Feature != null)
+{
+
+    <tr>
+        <td>@Feature.FeatureName</td>
+        <td>@Feature.Description</td>
+        <td>@Feature.AddedPrice.ToString("c")</td>
+        <td>
+            <button type="button" class="btn btn-light" @onclick="@(()=> EditFeature(Feature.FeatureId))">Edit</button>
+        </td>
+    </tr>
+}
+
+@code {
+
+    [Parameter]
+    public Feature? Feature { get; set; }
+
+
+    private void EditFeature(int invId)
+    {
+        NavigationManager.NavigateTo($"/editfeature/{invId}");
+    }
+
+}

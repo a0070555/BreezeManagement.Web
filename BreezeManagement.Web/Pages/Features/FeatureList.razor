@@ -1,0 +1,56 @@
+﻿@page "/features"
+
+@*@attribute [Authorize]*@
+
+@inject NavigationManager NavigationManager
+@inject IViewFeaturesByNameUseCase ViewFeaturesByNameUseCase
+
+<h3>FeatureList</h3>
+<br/>
+<ViewFeaturesComponent
+    OnSearchFeatures="OnSearchFeatures"></ViewFeaturesComponent>
+<br/>
+@if (listFeatures != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var feat in this.listFeatures)
+            {
+                <FeatureItemComponent Feature="feat"></FeatureItemComponent>
+            }
+        </tbody>
+
+    </table>
+}
+<br/>
+<button type="button" class="btn btn-primary" @onclick="AddFeature">Add Feature</button>
+
+@code {
+    private List<Feature>? listFeatures;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var feats = await ViewFeaturesByNameUseCase.ExecuteAsync();
+        this.listFeatures = feats.ToList();
+
+    }
+
+    private void OnSearchFeatures(List<Feature> features)
+    {
+        listFeatures = features;
+    }
+
+    private void AddFeature() 
+    {
+        NavigationManager.NavigateTo("/addfeature");
+    }
+
+}
