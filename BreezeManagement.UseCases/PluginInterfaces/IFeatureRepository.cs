@@ -1,6 +1,6 @@
 ﻿using BreezeManagement.CoreBusiness.Models;
 
-namespace Breeze.UseCases.PluginInterfaces
+namespace BreezeManagement.UseCases.PluginInterfaces
 {
     public interface IFeatureRepository
     {

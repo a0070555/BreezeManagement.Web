@@ -1,5 +1,42 @@
-﻿<h3>VehicleItemComponent</h3>
+﻿@inject NavigationManager NavigationManager
+@inject IDeleteVehicleUseCase DeleteVehicleUseCase
+
+@if (Vehicle != null)
+{
+    <tr>
+        <td>@Vehicle.Registration</td>
+        <td>@Vehicle.ModelName</td>
+        <td>@Vehicle.Colour</td>
+        <td>@Vehicle.Price.ToString("c")</td>
+        <td>@Vehicle.DateOfManufacture</td>
+        <td>@Vehicle.NumberOfOwners</td>
+        <td>@Vehicle.Mileage</td>
+        <td>
+            <button type="button" class="btn btn-light" @onclick="@(()=> EditVehicle(Vehicle.VehicleId))">Edit</button>
+            <button type="button" class="btn btn-light" @onclick="@(async ()=> await DeleteVehicle(Vehicle))">Delete</button>
+        </td>
+    </tr>
+}
+
 
 @code {
+
+    [Parameter]
+    public Vehicle? Vehicle { get; set; }
+
+    [Parameter]
+    public EventCallback OnVehicleDeleted { get; set; }
+
+    private void EditVehicle(int vehicleId)
+    {
+        NavigationManager.NavigateTo($"/editvehicle/{vehicleId}");
+    }
+
+    private async Task DeleteVehicle(Vehicle vehicle)
+    {
+        await DeleteVehicleUseCase.ExecuteAsync(vehicle.VehicleId);
+
+        await OnVehicleDeleted.InvokeAsync();
+    }
 
 }

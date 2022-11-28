@@ -1,5 +1,70 @@
-﻿<h3>VehicleList</h3>
+﻿@page "/vehicles"
+
+@*@attribute [Authorize]*@
+
+@inject NavigationManager NavigationManager
+@inject IViewVehiclesByNameUseCase ViewVehiclesByNameUseCase
+
+<h3>Vehicle List</h3>
+<br/>
+
+<ViewVehiclesComponent OnSearchVehicles="OnSearchVehicles"></ViewVehiclesComponent>
+
+@if (listVehicles != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Registration</th>
+                <th>Model Name</th>
+                <th>Colour</th>
+                <th>Price</th>
+                <th>Date Of Manufacture</th>
+                <th>Number Of Owners</th>
+                <th>Mileage</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vehicle in this.listVehicles)
+            {
+                <VehicleItemComponent 
+                    Vehicle="vehicle"
+                OnVehicleDeleted="OnVehicleDeleted"></VehicleItemComponent>
+            }
+        </tbody>
+    </table>
+}
+<br/>
+<button type="button" class="btn btn-primary" @onclick="AddVehicle">Add Vehicle</button>
+
 
 @code {
+    private List<Vehicle>? listVehicles;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadVehicles();
+    }
+
+    private void OnSearchVehicles(List<Vehicle> vehicles)
+    {
+        this.listVehicles = vehicles;
+    }
+
+    private void AddVehicle()
+    {
+        NavigationManager.NavigateTo("/addvehicle");
+    }
+
+    private async Task OnVehicleDeleted()
+    {
+        await LoadVehicles();
+    }
+
+    private async Task LoadVehicles()
+    {
+        var vehs = await ViewVehiclesByNameUseCase.ExecuteAsync();
+        this.listVehicles = vehs.ToList();
+    }
 }

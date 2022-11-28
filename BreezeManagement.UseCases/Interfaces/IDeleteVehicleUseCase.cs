@@ -1,4 +1,6 @@
-﻿namespace BreezeManagement.UseCases.Interfaces
+﻿
+
+namespace BreezeManagement.UseCases.Interfaces
 {
     public interface IDeleteVehicleUseCase
     {

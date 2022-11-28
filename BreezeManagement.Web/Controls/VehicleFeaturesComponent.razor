@@ -1,5 +1,59 @@
-﻿<h3>VehicleFeaturesComponent</h3>
+﻿<div class="form-group">
+    <label>Features</label>
+    <ViewFeaturesComponent 
+        DisplaySearchResult="true"
+        OnSelectFeature="OnSelectFeature"
+    ></ViewFeaturesComponent>
+</div>
+@if (VehicleFeatures != null && VehicleFeatures.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vehicleFeature in this.VehicleFeatures)
+            {
+                <tr>
+                    <td>
+                        @vehicleFeature.Feature.FeatureName
+                    </td>
+                    <td>
+                        <button class="btn btn-link" type="button" @onclick="@(()=>RemoveFeature(vehicleFeature))">Remove</button>
+                    </td>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+}
+
 
 @code {
 
+    [Parameter]
+    public EventCallback<List<VehicleFeature>> OnFeatureSelected { get; set; }
+
+    [Parameter]
+    public List<VehicleFeature> VehicleFeatures { get; set; } = new List<VehicleFeature>();
+
+
+    private async Task OnSelectFeature(Feature feature)
+    {
+        if (!VehicleFeatures.Any(x => x.Feature.FeatureName.Equals(feature.FeatureName, StringComparison.OrdinalIgnoreCase)))
+        {
+            this.VehicleFeatures.Add(new VehicleFeature { FeatureId = feature.FeatureId, Feature = feature});
+        }
+
+        await OnFeatureSelected.InvokeAsync(this.VehicleFeatures);
+
+    }
+
+    private void RemoveFeature(VehicleFeature vehicleFeature)
+    {
+        this.VehicleFeatures.Remove(vehicleFeature);
+    }
 }

@@ -1,6 +1,6 @@
 ﻿using BreezeManagement.CoreBusiness.Models;
 
-namespace Breeze.UseCases.Interfaces
+namespace BreezeManagement.UseCases.Interfaces
 {
     public interface IViewFeaturesByIdUseCase
     {

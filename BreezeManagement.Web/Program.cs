@@ -1,7 +1,6 @@
-using Breeze.Plugins.EFCore;
+using BreezeManagement.Plugins.EFCore;
 using Breeze.UseCases.Features;
-using Breeze.UseCases.Interfaces;
-using Breeze.UseCases.PluginInterfaces;
+using BreezeManagement.UseCases.PluginInterfaces;
 using BreezeManagement.UseCases.Interfaces;
 using BreezeManagement.UseCases.Vehicles;
 using Microsoft.AspNetCore.Components;

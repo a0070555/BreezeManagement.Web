@@ -1,4 +1,4 @@
-﻿using Breeze.Plugins.EFCore;
+﻿using BreezeManagement.Plugins.EFCore;
 using BreezeManagement.CoreBusiness.Models;
 using System;
 using System.Collections.Generic;
@@ -61,17 +61,17 @@ namespace BreezeManagement.Plugins.EFCore
                 return;
             }
 
-            var prod = await db.Vehicles.FindAsync(vehicle.VehicleId);
-            if (prod != null)
+            var veh = await db.Vehicles.FindAsync(vehicle.VehicleId);
+            if (veh != null)
             {
-                prod.Registration = vehicle.Registration;
-                prod.ModelName = vehicle.ModelName;
-                prod.Colour = vehicle.Colour;
-                prod.Price = vehicle.Price;
-                prod.DateOfManufacture = vehicle.DateOfManufacture;
-                prod.NumberOfOwners = vehicle.NumberOfOwners;
-                prod.Mileage = vehicle.Mileage;
-                prod.VehicleFeatures = vehicle.VehicleFeatures;
+                veh.Registration = vehicle.Registration;
+                veh.ModelName = vehicle.ModelName;
+                veh.Colour = vehicle.Colour;
+                veh.Price = vehicle.Price;
+                veh.DateOfManufacture = vehicle.DateOfManufacture;
+                veh.NumberOfOwners = vehicle.NumberOfOwners;
+                veh.Mileage = vehicle.Mileage;
+                veh.VehicleFeatures = vehicle.VehicleFeatures;
 
                 await db.SaveChangesAsync();
             }

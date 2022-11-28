@@ -1,5 +1,5 @@
-﻿using Breeze.UseCases.Interfaces;
-using Breeze.UseCases.PluginInterfaces;
+﻿using BreezeManagement.UseCases.Interfaces;
+using BreezeManagement.UseCases.PluginInterfaces;
 using BreezeManagement.CoreBusiness.Models;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using Breeze.UseCases.PluginInterfaces;
+﻿using BreezeManagement.UseCases.PluginInterfaces;
 using BreezeManagement.CoreBusiness.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Breeze.Plugins.EFCore
+namespace BreezeManagement.Plugins.EFCore
 {
     public class FeatureRepository : IFeatureRepository
     {
