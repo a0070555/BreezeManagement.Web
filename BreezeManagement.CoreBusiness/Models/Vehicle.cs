@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BreezeManagement.CoreBusiness.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace BreezeManagement.CoreBusiness.Models
         public string Colour { get; set; }
 
         [Required]
+        [Vehicle_EnsurePriceIsGreaterThanFeaturesPrice]
         public double Price { get; set; }
 
         [Required]
@@ -33,5 +35,24 @@ namespace BreezeManagement.CoreBusiness.Models
         public bool IsDeleted { get; set; } = false;
 
         public List<VehicleFeature>? VehicleFeatures { get; set; }
+
+        public double TotalFeatureCost()
+        {
+            return this.VehicleFeatures.Sum(x => x.Feature?.AddedPrice ?? 0);
+        }
+
+        public bool ValidatePricing()
+        {
+            if (VehicleFeatures == null || VehicleFeatures.Count <= 0)
+            {
+                return true;
+            }
+
+            if (this.TotalFeatureCost() > Price)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

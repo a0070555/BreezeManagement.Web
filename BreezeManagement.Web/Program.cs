@@ -6,6 +6,7 @@ using BreezeManagement.UseCases.Vehicles;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
+using BreezeManagement.UseCases.Activities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,25 +22,31 @@ builder.Services.AddDbContext<BreezeManagementContext>(options =>
 
 //Repositories
 builder.Services.AddTransient<IFeatureRepository, FeatureRepository>();
+builder.Services.AddTransient<IVehicleRepository, VehicleRepository>();
+builder.Services.AddTransient<IFeatureAdditionRepository, FeatureAdditionRepository>();
+builder.Services.AddTransient<IVehicleTransactionRepository, VehicleTransactionRepository>();
 
 //Use Cases
 builder.Services.AddTransient<IViewFeaturesByNameUseCase, ViewFeaturesByNameUseCase>();
 builder.Services.AddTransient<IViewFeaturesByIdUseCase, ViewFeaturesByIdUseCase>();
 builder.Services.AddTransient<IAddFeatureUseCase, AddFeatureUseCase>();
 builder.Services.AddTransient<IEditFeatureUseCase, EditFeatureUseCase>();
+builder.Services.AddTransient<ICreateFeatureUseCase, CreateFeatureUseCase>();
 
-builder.Services.AddTransient<IViewVehiclesByNameUseCase, IViewVehiclesByNameUseCase>();
-builder.Services.AddTransient<IViewVehiclesByIdUseCase, IViewVehiclesByIdUseCase>();
+builder.Services.AddTransient<IViewVehiclesByNameUseCase, ViewVehiclesByNameUseCase>();
+builder.Services.AddTransient<IViewVehiclesByIdUseCase, ViewVehiclesByIdUseCase>();
 builder.Services.AddTransient<IAddVehicleUseCase, AddVehicleUseCase>();
 builder.Services.AddTransient<IEditVehicleUseCase, EditVehicleUseCase>();
 builder.Services.AddTransient<IDeleteVehicleUseCase, DeleteVehicleUseCase>();
+builder.Services.AddTransient<ICreateVehicleUseCase, CreateVehicleUseCase>();
+builder.Services.AddTransient<ISellVehicleUseCase, SellVehicleUseCase>();
 
 
 
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();
-var imsContext = scope.ServiceProvider.GetRequiredService<BreezeManagementContext>();
+var breezeManagementContext = scope.ServiceProvider.GetRequiredService<BreezeManagementContext>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

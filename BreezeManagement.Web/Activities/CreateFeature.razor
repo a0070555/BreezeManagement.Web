@@ -1,0 +1,55 @@
+﻿@page "/createfeature"
+
+@inject ICreateFeatureUseCase CreateFeatureUseCase
+
+@using BreezeManagement.Web.ViewModels
+<h3>Create Feature</h3>
+<br/>
+
+@if (addViewModel != null)
+{
+    <EditForm Model="addViewModel" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <label for="feat">Feature to Add</label>
+            <ViewFeaturesComponent 
+                OnSelectFeature="OnSelectFeature"
+                DisplaySearchResult="true"></ViewFeaturesComponent>
+            <InputText id="feat" class="form-control" @bind-Value="addViewModel.FeatureName" disabled></InputText>
+            <input type="hidden" value="@addViewModel.FeatureId" />
+            @if (selectedFeature != null)
+            {
+                <text>Price: </text>
+                @selectedFeature?.AddedPrice.ToString("c");
+            }
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Add</button>
+
+    </EditForm>
+}
+
+@code {
+    private AddViewModel addViewModel = new AddViewModel();
+    private Feature selectedFeature;
+
+    private void OnSelectFeature(Feature feature)
+    {
+        this.selectedFeature = feature;
+        addViewModel.FeatureId = feature.FeatureId;
+        addViewModel.FeatureName = feature.FeatureName;
+    }
+
+    private async Task OnValidSubmit()
+    {
+        await CreateFeatureUseCase.ExecuteAsync(
+            this.selectedFeature
+        );
+
+        this.addViewModel = new AddViewModel();
+        this.selectedFeature = null;
+
+    }
+}

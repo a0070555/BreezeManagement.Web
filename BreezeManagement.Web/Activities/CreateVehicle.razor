@@ -1,0 +1,62 @@
+﻿@page "/createvehicle"
+@using BreezeManagement.Web.ViewModels;
+
+@inject ICreateVehicleUseCase CreateVehicleUseCase
+
+<ErrorMessageComponent ErrorMessage="@errorMessage"></ErrorMessageComponent>
+
+<h3>Create Vehicle</h3>
+<br/>
+@if (createViewModel != null)
+{
+    <EditForm Model="createViewModel" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <label for="veh">Vehicle to Create</label>
+            <ViewVehiclesComponent OnSelectVehicle="OnSelectVehicle"
+                                  DisplaySearchResult="true"></ViewVehiclesComponent>
+            <InputText id="veh" class="form-control" @bind-Value="createViewModel.VehicleName" disabled></InputText>
+            <input type="hidden" value="@createViewModel.VehicleId" />
+            @if (selectedVehicle != null)
+            {
+                <text>Price: </text>
+                @selectedVehicle?.Price.ToString("c")
+                ;
+            }
+
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Create</button>
+
+    </EditForm>
+}
+
+@code {
+    private CreateViewModel createViewModel = new CreateViewModel();
+    private Vehicle selectedVehicle;
+    private string errorMessage;
+
+    private async Task OnValidSubmit()
+    {
+
+        await CreateVehicleUseCase.ExecuteAsync(
+            this.createViewModel.CreationNumber,
+            this.selectedVehicle,
+            "Frank"
+        );
+
+        this.createViewModel = new CreateViewModel();
+        this.selectedVehicle = null;
+        this.errorMessage = string.Empty;
+    }
+
+    public void OnSelectVehicle(Vehicle vehicle)
+    {
+        this.selectedVehicle = vehicle;
+        createViewModel.VehicleId = vehicle.VehicleId;
+        createViewModel.VehicleName = vehicle.Registration;
+    }
+
+}
