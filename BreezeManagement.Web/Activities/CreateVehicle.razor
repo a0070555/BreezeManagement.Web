@@ -19,6 +19,12 @@
                                   DisplaySearchResult="true"></ViewVehiclesComponent>
             <InputText id="veh" class="form-control" @bind-Value="createViewModel.VehicleName" disabled></InputText>
             <input type="hidden" value="@createViewModel.VehicleId" />
+
+            <div class="form-group">
+                <label for="cn">CN</label>
+                <InputText id="cn" @bind-Value="createViewModel.CreationNumber" class="form-control"></InputText>
+            </div>
+
             @if (selectedVehicle != null)
             {
                 <text>Price: </text>

@@ -16,6 +16,7 @@ namespace BreezeManagement.CoreBusiness.Models
         public string Registration { get; set; }
 
         [Required]
+        [Display(Name = "Model Name")]
         public string ModelName { get; set; }
 
         [Required]
@@ -26,8 +27,10 @@ namespace BreezeManagement.CoreBusiness.Models
         public double Price { get; set; }
 
         [Required]
+        [Display(Name = "Date Of Manufacture")]
         public DateTime DateOfManufacture { get; set; }
 
+        [Display(Name = "Number Of Owners")]
         public int NumberOfOwners { get; set; }
 
         public double Mileage { get; set; }
