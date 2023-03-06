@@ -1,6 +1,6 @@
 ﻿using BreezeManagement.CoreBusiness.Models;
-using BreezeManagement.Plugins.EFCore;
 using BreezeManagement.UseCases.Interfaces;
+using BreezeManagement.UseCases.PluginInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

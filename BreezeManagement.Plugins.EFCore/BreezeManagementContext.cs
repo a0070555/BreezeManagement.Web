@@ -16,6 +16,7 @@ namespace BreezeManagement.Plugins.EFCore
 
         public DbSet<Feature> Features { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Staff> Staff { get; set; }
         public DbSet<FeatureAddition> FeatureAdditions { get; set; }
         public DbSet<VehicleTransaction> VehicleTransactions { get; set; }
 

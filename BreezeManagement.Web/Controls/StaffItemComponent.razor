@@ -1,0 +1,40 @@
+﻿@inject NavigationManager NavigationManager
+@inject IDeleteStaffUseCase DeleteStaffUseCase
+
+@if (Staff != null)
+{
+    <tr>
+        <td>@Staff.FirstName</td>
+        <td>@Staff.LastName</td>
+        <td>@Staff.PhoneNumber</td>
+        <td>@Staff.DateOfBirth</td>
+        <td>@Staff.Address</td>
+        <td>@Staff.Title</td>
+        <td>@Staff.Email</td>
+        <td>@Staff.NumberOfSales</td>
+        <td>
+            <button type="button" class="btn btn-light" @onclick="@(()=> EditStaff(Staff.StaffId))">Edit</button>
+            <button type="button" class="btn btn-light" @onclick="@(async ()=> await DeleteStaff(Staff))">Delete</button>
+        </td>
+    </tr>
+}
+
+@code {
+    [Parameter]
+    public Staff? Staff { get; set; }
+
+    [Parameter]
+    public EventCallback OnStaffDeleted { get; set; }
+
+    private void EditStaff(int staffId)
+    {
+        NavigationManager.NavigateTo($"/editstaff/{staffId}");
+    }
+
+    private async Task DeleteStaff(Staff staff)
+    {
+        await DeleteStaffUseCase.ExecuteAsync(staff.StaffId);
+
+        await OnStaffDeleted.InvokeAsync();
+    }
+}

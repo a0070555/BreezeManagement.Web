@@ -1,5 +1,4 @@
 ﻿using BreezeManagement.CoreBusiness.Models;
-using BreezeManagement.Plugins.EFCore;
 
 namespace BreezeManagement.UseCases.Interfaces
 {

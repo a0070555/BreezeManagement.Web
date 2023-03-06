@@ -19,5 +19,7 @@ namespace BreezeManagement.CoreBusiness.Models
         public double AddedPrice { get; set; }
 
         public List<VehicleFeature> VehicleFeatures { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
     }
 }

@@ -1,0 +1,68 @@
+﻿@page "/staff"
+
+@inject NavigationManager NavigationManager
+@inject IViewStaffByNameUseCase ViewStaffByNameUseCase
+
+<h3>Staff List</h3>
+<br/>
+
+<ViewStaffComponent OnSearchStaff="OnSearchStaff"></ViewStaffComponent>
+
+@if (listStaff != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone Number</th>
+                <th>Date Of Birth</th>
+                <th>Address</th>
+                <th>Title</th>
+                <th>Email</th>
+                <th>Number Of Sales</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var staff in this.listStaff)
+            {
+                <StaffItemComponent
+                    Staff="staff"
+                    OnStaffDeleted="OnStaffDeleted"></StaffItemComponent>
+            }
+        </tbody>
+    </table>
+}
+<br/>
+<button type="button" class="btn btn-primary" @onclick="AddStaff">Add Staff</button>
+
+@code {
+    private List<Staff>? listStaff;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadStaff();
+    }
+
+    private void OnSearchStaff(List<Staff> staff)
+    {
+        this.listStaff = staff;
+    }
+
+    private void AddStaff()
+    {
+        NavigationManager.NavigateTo("/addstaff");
+    }
+
+    private async Task OnStaffDeleted()
+    {
+        await LoadStaff();
+    }
+
+    private async Task LoadStaff()
+    {
+        var staff = await ViewStaffByNameUseCase.ExecuteAsync();
+        this.listStaff = staff.ToList();
+    }
+
+}

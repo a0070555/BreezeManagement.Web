@@ -1,4 +1,4 @@
-﻿@page "/editfeature/{featId:int}"
+﻿@page "/editfeature/{id:int}"
 
 @*@attribute [Authorize]*@
 
@@ -36,23 +36,19 @@
 }
 
 @code {
-
+    private Feature feature;
+    
     [Parameter]
-    public int InvId { get; set; }
+    public int Id { get; set; }
 
-    private Feature? feature;
-
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        this.feature = await ViewFeaturesByIdUseCase.ExecuteAsync(InvId);
+        this.feature = await ViewFeaturesByIdUseCase.ExecuteAsync(this.Id);
     }
 
     public async Task OnValidSubmit()
     {
-        if (this.feature != null)
-        {
             await EditFeatureUseCase.ExecuteAsync(this.feature);
             NavigationManager.NavigateTo("/features");
-        }
     }
 }

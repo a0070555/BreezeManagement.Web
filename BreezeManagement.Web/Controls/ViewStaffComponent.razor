@@ -1,0 +1,74 @@
+﻿@using BreezeManagement.CoreBusiness
+@inject IViewStaffByNameUseCase ViewStaffByNameUseCase
+
+<div class="input-group mb-3">
+    <input type="text"
+           class="form-control form-control-lg"
+           placeholder="Type staff name here to search"
+           @bind-value="staffNameToSearch"
+           @bind-value:event="oninput" />
+    <button type="button" class="input-group-text btn-success"
+            @onclick="@( async()=> { await ViewStaff(); } )">
+        View
+    </button>
+</div>
+@if (this.DisplaySearchResult && _staff != null && selectedStaff == null)
+{
+        <div style="overflow-y:auto; max-height:300px; border:1px solid silver; padding-top:5px">
+            <ul style="list-style-type:none">
+            @foreach (var s in _staff)
+            {
+                        <li style="cursor:pointer" @onclick="@(async() => { await SelectStaff(s); })"
+            @key="s.StaffId">@s.FullName</li>
+            }
+            </ul>
+        </div>
+}
+
+@code {
+    private string? _staffNameToSearch;
+    public string staffNameToSearch
+    {
+        get => _staffNameToSearch;
+        set
+        {
+            _staffNameToSearch = value;
+            if (!string.IsNullOrWhiteSpace(_staffNameToSearch) &&
+                _staffNameToSearch.Length > 2)
+            {
+                ViewStaff();
+            }
+        }
+    }
+
+    private List<Staff>? _staff;
+    private Staff? selectedStaff;
+
+    [Parameter]
+    public EventCallback<List<Staff>> OnSearchStaff { get; set; }
+
+    [Parameter]
+    public bool DisplaySearchResult { get; set; } = false;
+
+    [Parameter]
+    public EventCallback<Staff> OnSelectStaff { get; set; }
+
+    private async Task ViewStaff()
+    {
+        var staff = (await ViewStaffByNameUseCase
+        .ExecuteAsync(staffNameToSearch ?? string.Empty)).ToList();
+
+        await OnSearchStaff.InvokeAsync(staff);
+        _staff = staff;
+        this.selectedStaff = null;
+
+        StateHasChanged();
+
+    }
+
+    private async Task SelectStaff(Staff staff)
+    {
+        await OnSelectStaff.InvokeAsync(staff);
+        selectedStaff = staff;
+    }
+}

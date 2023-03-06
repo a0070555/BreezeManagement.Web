@@ -1,5 +1,5 @@
 ﻿@inject NavigationManager NavigationManager
-
+@inject IDeleteFeatureUseCase DeleteFeatureUseCase
 
 @if (Feature != null)
 {
@@ -10,6 +10,7 @@
         <td>@Feature.AddedPrice.ToString("c")</td>
         <td>
             <button type="button" class="btn btn-light" @onclick="@(()=> EditFeature(Feature.FeatureId))">Edit</button>
+            <button type="button" class="btn btn-light" @onclick="@(async ()=> await DeleteFeature(Feature))">Delete</button>
         </td>
     </tr>
 }
@@ -19,10 +20,19 @@
     [Parameter]
     public Feature? Feature { get; set; }
 
+    [Parameter]
+    public EventCallback OnFeatureDeleted { get; set; }
 
-    private void EditFeature(int invId)
+    private void EditFeature(int featureId)
     {
-        NavigationManager.NavigateTo($"/editfeature/{invId}");
+        NavigationManager.NavigateTo($"/editfeature/{featureId}");
+    }
+
+    private async Task DeleteFeature(Feature feature)
+    {
+        await DeleteFeatureUseCase.ExecuteAsync(feature.FeatureId);
+
+        await OnFeatureDeleted.InvokeAsync();
     }
 
 }

@@ -21,14 +21,14 @@ namespace BreezeManagement.Plugins.EFCore
         public async Task<IEnumerable<Feature>> GetFeaturesByName(string name)
         {
             //return await this.db.Features.Where(f => f.FeatureName.ToLower().IndexOf(name.ToLower()) >= 0).ToListAsync();
-            return await this.db.Features.Where(f => f.FeatureName.Contains(name, StringComparison.OrdinalIgnoreCase) ||
-                                                    string.IsNullOrWhiteSpace(name)).ToListAsync();
+            return await this.db.Features.Where(f => f.FeatureName.Contains(name, StringComparison.OrdinalIgnoreCase) && f.IsDeleted == false ||
+                                                    string.IsNullOrWhiteSpace(name) && f.IsDeleted == false).ToListAsync();
         }
 
         public async Task AddFeatureAsync(Feature feature)
         {
-            //To prevent different featentories from having the same name
-            if (db.Features.Any(x => x.FeatureName.ToLower() == feature.FeatureName.ToLower()))
+            //To prevent different features from having the same name
+            if (db.Features.Any(x => x.FeatureName.ToLower() == feature.FeatureName.ToLower() && x.IsDeleted == false))
             {
                 return;
             }
@@ -57,6 +57,16 @@ namespace BreezeManagement.Plugins.EFCore
         public async Task<Feature?> GetFeaturesByIdAsync(int featureId)
         {
             return await this.db.Features.FindAsync(featureId);
+        }
+
+        public async Task DeleteFeatureAsync(int featureId)
+        {
+            var feature = await db.Features.FindAsync(featureId);
+            if (feature != null)
+            {
+                feature.IsDeleted = true;
+                await db.SaveChangesAsync();
+            }
         }
     }
 }

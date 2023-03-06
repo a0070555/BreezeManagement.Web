@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using BreezeManagement.UseCases.PluginInterfaces;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BreezeManagement.Plugins.EFCore
 {
@@ -21,7 +23,7 @@ namespace BreezeManagement.Plugins.EFCore
         public async Task AddVehicleAsync(Vehicle vehicle)
         {
             //if (db.Vehicles.Any(x => x.VehicleName.Equals(vehicle.VehicleName, StringComparison.OrdinalIgnoreCase)))
-            if (db.Vehicles.Any(x => x.Registration.ToLower() == vehicle.Registration.ToLower()))
+            if (db.Vehicles.Any(x => x.Registration.ToLower() == vehicle.Registration.ToLower() && x.IsDeleted == false))
             {
                 return;
             }

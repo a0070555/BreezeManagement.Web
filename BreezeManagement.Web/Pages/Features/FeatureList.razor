@@ -24,7 +24,8 @@
         <tbody>
             @foreach (var feat in this.listFeatures)
             {
-                <FeatureItemComponent Feature="feat"></FeatureItemComponent>
+                <FeatureItemComponent Feature="feat"
+                            OnFeatureDeleted="OnFeatureDeleted"></FeatureItemComponent>
             }
         </tbody>
 
@@ -48,9 +49,20 @@
         listFeatures = features;
     }
 
+    private async Task OnFeatureDeleted()
+    {
+        await LoadFeatures();
+    }
+
     private void AddFeature() 
     {
         NavigationManager.NavigateTo("/addfeature");
+    }
+
+    private async Task LoadFeatures()
+    {
+        var features = await ViewFeaturesByNameUseCase.ExecuteAsync();
+        this.listFeatures = features.ToList();
     }
 
 }

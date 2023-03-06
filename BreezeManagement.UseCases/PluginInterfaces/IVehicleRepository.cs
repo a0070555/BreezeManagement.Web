@@ -1,6 +1,6 @@
 ﻿using BreezeManagement.CoreBusiness.Models;
 
-namespace BreezeManagement.Plugins.EFCore
+namespace BreezeManagement.UseCases.PluginInterfaces
 {
     public interface IVehicleRepository
     {

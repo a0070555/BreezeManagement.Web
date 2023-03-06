@@ -1,11 +1,11 @@
-﻿using BreezeManagement.Plugins.EFCore;
-using BreezeManagement.CoreBusiness.Models;
+﻿using BreezeManagement.CoreBusiness.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BreezeManagement.UseCases.Interfaces;
+using BreezeManagement.UseCases.PluginInterfaces;
 
 namespace BreezeManagement.UseCases.Vehicles
 {
