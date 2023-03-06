@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BreezeManagement.UseCases.Interfaces;
+using BreezeManagement.UseCases.Interfaces.Features;
 
 namespace Breeze.UseCases.Features
 {

@@ -1,4 +1,4 @@
-﻿namespace BreezeManagement.UseCases.Interfaces
+﻿namespace BreezeManagement.UseCases.Interfaces.Staffs
 {
     public interface IDeleteStaffUseCase
     {

@@ -1,7 +1,6 @@
 using BreezeManagement.Plugins.EFCore;
 using Breeze.UseCases.Features;
 using BreezeManagement.UseCases.PluginInterfaces;
-using BreezeManagement.UseCases.Interfaces;
 using BreezeManagement.UseCases.Vehicles;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -9,6 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using BreezeManagement.UseCases.Activities;
 using BreezeManagement.UseCases.Staffs;
 using BreezeManagement.UseCases.Features;
+using BreezeManagement.UseCases.Interfaces.Features;
+using BreezeManagement.UseCases.Interfaces.Staffs;
+using BreezeManagement.UseCases.Interfaces.Vehicles;
+using Polly.Extensions.Http;
+using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +27,9 @@ builder.Services.AddDbContext<BreezeManagementContext>(options =>
 });
 
 //Repositories
-builder.Services.AddTransient<IFeatureRepository, FeatureRepository>();
+builder.Services.AddHttpClient<IFeatureRepository, FeatureRepository>()
+    .AddPolicyHandler(GetRetryPolicy())
+    .AddPolicyHandler(GetCircuitBreakerPolicy());
 builder.Services.AddTransient<IVehicleRepository, VehicleRepository>();
 builder.Services.AddTransient<IStaffRepository, StaffRepository>();
 builder.Services.AddTransient<IFeatureAdditionRepository, FeatureAdditionRepository>();
@@ -75,3 +81,19 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+
+IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+{
+    return HttpPolicyExtensions
+        .HandleTransientHttpError()
+        .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
+        .WaitAndRetryAsync(5, retryAttempt =>
+            TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+}
+
+IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+{
+    return HttpPolicyExtensions
+        .HandleTransientHttpError()
+        .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
+}

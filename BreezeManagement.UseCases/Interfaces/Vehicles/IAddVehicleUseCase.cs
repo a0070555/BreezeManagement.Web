@@ -1,6 +1,6 @@
 ﻿using BreezeManagement.CoreBusiness.Models;
 
-namespace BreezeManagement.UseCases.Interfaces
+namespace BreezeManagement.UseCases.Interfaces.Vehicles
 {
     public interface IAddVehicleUseCase
     {

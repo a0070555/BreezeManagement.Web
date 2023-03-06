@@ -1,11 +1,11 @@
-﻿using BreezeManagement.UseCases.Interfaces;
-using BreezeManagement.UseCases.PluginInterfaces;
+﻿using BreezeManagement.UseCases.PluginInterfaces;
 using BreezeManagement.CoreBusiness.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BreezeManagement.UseCases.Interfaces.Features;
 
 namespace Breeze.UseCases.Features
 {

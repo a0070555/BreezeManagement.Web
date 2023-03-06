@@ -1,8 +1,8 @@
 ﻿using BreezeManagement.CoreBusiness.Models;
 
-namespace BreezeManagement.UseCases.Interfaces
+namespace BreezeManagement.UseCases.Interfaces.Staffs
 {
-    public interface IEditStaffUseCase
+    public interface IAddStaffUseCase
     {
         Task ExecuteAsync(Staff staff);
     }

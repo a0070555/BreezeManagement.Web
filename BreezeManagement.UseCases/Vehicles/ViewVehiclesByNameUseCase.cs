@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BreezeManagement.UseCases.Interfaces;
 using BreezeManagement.UseCases.PluginInterfaces;
+using BreezeManagement.UseCases.Interfaces.Vehicles;
 
 namespace BreezeManagement.UseCases.Vehicles
 {

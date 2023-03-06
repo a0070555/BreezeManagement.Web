@@ -1,4 +1,4 @@
-﻿using BreezeManagement.UseCases.Interfaces;
+﻿using BreezeManagement.UseCases.Interfaces.Vehicles;
 using BreezeManagement.UseCases.PluginInterfaces;
 using System;
 using System.Collections.Generic;

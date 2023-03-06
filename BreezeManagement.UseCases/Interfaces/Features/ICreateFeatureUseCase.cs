@@ -1,8 +1,8 @@
 ﻿using BreezeManagement.CoreBusiness.Models;
 
-namespace BreezeManagement.UseCases.Interfaces
+namespace BreezeManagement.UseCases.Interfaces.Features
 {
-    public interface IAddFeatureUseCase
+    public interface ICreateFeatureUseCase
     {
         Task ExecuteAsync(Feature feature);
     }

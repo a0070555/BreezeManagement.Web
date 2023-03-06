@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BreezeManagement.UseCases.Interfaces;
+using BreezeManagement.UseCases.Interfaces.Features;
 using BreezeManagement.UseCases.PluginInterfaces;
 
 namespace BreezeManagement.UseCases.Features

@@ -20,7 +20,6 @@ namespace BreezeManagement.Plugins.EFCore
 
         public async Task<IEnumerable<Feature>> GetFeaturesByName(string name)
         {
-            //return await this.db.Features.Where(f => f.FeatureName.ToLower().IndexOf(name.ToLower()) >= 0).ToListAsync();
             return await this.db.Features.Where(f => f.FeatureName.Contains(name, StringComparison.OrdinalIgnoreCase) && f.IsDeleted == false ||
                                                     string.IsNullOrWhiteSpace(name) && f.IsDeleted == false).ToListAsync();
         }

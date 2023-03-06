@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BreezeManagement.CoreBusiness.Models;
-using BreezeManagement.UseCases.Interfaces;
+using BreezeManagement.UseCases.Interfaces.Staffs;
 using BreezeManagement.UseCases.PluginInterfaces;
 
 namespace BreezeManagement.UseCases.Staffs
