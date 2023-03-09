@@ -1,10 +1,10 @@
 ﻿@page "/editvehicle/{id:int}"
 
-@*@attribute [Authorize]*@
-
 @inject NavigationManager NavigationManager
 @inject IViewVehiclesByIdUseCase ViewVehicleByIdUseCase
 @inject IEditVehicleUseCase EditVehicleUseCase
+
+@attribute [Authorize]
 
 <h3>Edit Vehicle</h3>
 <br/>

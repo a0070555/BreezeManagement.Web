@@ -11,8 +11,8 @@ using BreezeManagement.UseCases.Features;
 using BreezeManagement.UseCases.Interfaces.Features;
 using BreezeManagement.UseCases.Interfaces.Staffs;
 using BreezeManagement.UseCases.Interfaces.Vehicles;
-using Polly.Extensions.Http;
-using Polly;
+using Auth0.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,9 +27,7 @@ builder.Services.AddDbContext<BreezeManagementContext>(options =>
 });
 
 //Repositories
-builder.Services.AddHttpClient<IFeatureRepository, FeatureRepository>()
-    .AddPolicyHandler(GetRetryPolicy())
-    .AddPolicyHandler(GetCircuitBreakerPolicy());
+builder.Services.AddTransient<IFeatureRepository, FeatureRepository>();
 builder.Services.AddTransient<IVehicleRepository, VehicleRepository>();
 builder.Services.AddTransient<IStaffRepository, StaffRepository>();
 builder.Services.AddTransient<IFeatureAdditionRepository, FeatureAdditionRepository>();
@@ -57,6 +55,16 @@ builder.Services.AddTransient<IAddStaffUseCase, AddStaffUseCase>();
 builder.Services.AddTransient<IEditStaffUseCase, EditStaffUseCase>();
 builder.Services.AddTransient<IDeleteStaffUseCase, DeleteStaffUseCase>();
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+});
+
+builder.Services.AddAuth0WebAppAuthentication(options => {
+    options.Domain = builder.Configuration["Auth:Domain"];
+    options.ClientId = builder.Configuration["Auth:ClientId"];
+});
 
 var app = builder.Build();
 
@@ -77,23 +85,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
-
-IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
-{
-    return HttpPolicyExtensions
-        .HandleTransientHttpError()
-        .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
-        .WaitAndRetryAsync(5, retryAttempt =>
-            TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
-}
-
-IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
-{
-    return HttpPolicyExtensions
-        .HandleTransientHttpError()
-        .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
-}

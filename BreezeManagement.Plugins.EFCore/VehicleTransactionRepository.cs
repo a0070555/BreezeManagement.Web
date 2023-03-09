@@ -75,6 +75,7 @@ namespace BreezeManagement.Plugins.EFCore
                 UnitPrice = price,
                 ActivityType = VehicleTransactionType.SellVehicle
             });
+            vehicle.IsDeleted = true;
             await this.db.SaveChangesAsync();
         }
     }

@@ -3,6 +3,8 @@
 @inject IAddStaffUseCase AddStaffUseCase
 @inject NavigationManager NavigationManager
 
+@attribute [Authorize]
+
 <h3>Add Staff</h3>
 <br/>
 @if (staff != null)

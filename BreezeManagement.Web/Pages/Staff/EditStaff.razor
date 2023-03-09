@@ -4,6 +4,8 @@
 @inject IViewStaffByIdUseCase ViewStaffByIdUseCase
 @inject IEditStaffUseCase EditStaffUseCase
 
+@attribute [Authorize]
+
 <h3>Edit Staff</h3>
 <br/>
 @if (this.staff != null)
