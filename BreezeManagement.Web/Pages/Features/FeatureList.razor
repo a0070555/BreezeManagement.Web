@@ -1,6 +1,7 @@
 ﻿@page "/features"
 
 @attribute [Authorize]
+@attribute [Authorize(Roles = "Admin")]
 
 @inject NavigationManager NavigationManager
 @inject IViewFeaturesByNameUseCase ViewFeaturesByNameUseCase

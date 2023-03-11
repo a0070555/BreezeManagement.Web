@@ -3,7 +3,7 @@
 @inject NavigationManager NavigationManager
 @inject IViewVehiclesByNameUseCase ViewVehiclesByNameUseCase
 
-@attribute [Authorize]
+@attribute [Authorize(Policy = "StaffPolicy")]
 
 <h3>Vehicle List</h3>
 <br/>

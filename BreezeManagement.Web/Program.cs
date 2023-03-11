@@ -13,6 +13,9 @@ using BreezeManagement.UseCases.Interfaces.Staffs;
 using BreezeManagement.UseCases.Interfaces.Vehicles;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,9 +64,19 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 });
 
-builder.Services.AddAuth0WebAppAuthentication(options => {
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
     options.Domain = builder.Configuration["Auth:Domain"];
     options.ClientId = builder.Configuration["Auth:ClientId"];
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ManagerPolicy", policy =>
+        policy.RequireRole("manager"));
+
+    options.AddPolicy("StaffPolicy", policy =>
+        policy.RequireRole("staff"));
 });
 
 var app = builder.Build();
