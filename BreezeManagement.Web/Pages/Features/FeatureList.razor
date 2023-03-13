@@ -1,11 +1,11 @@
 ﻿@page "/features"
 
 @attribute [Authorize]
-@attribute [Authorize(Roles = "Admin")]
+@*@attribute [Authorize(Roles = "staff")]*@
 
 @inject NavigationManager NavigationManager
 @inject IViewFeaturesByNameUseCase ViewFeaturesByNameUseCase
-
+<main class="spectrum-background">
 <h3>Feature List</h3>
 <br/>
 <ViewFeaturesComponent
@@ -33,8 +33,8 @@
     </table>
 }
 <br/>
-<button type="button" class="btn btn-primary" @onclick="AddFeature">Add Feature</button>
-
+<button type="button" class="button-add" @onclick="AddFeature">Add Feature</button>
+</main>
 @code {
     private List<Feature>? listFeatures;
 

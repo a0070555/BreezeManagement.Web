@@ -11,9 +11,24 @@
         <td>@Vehicle.DateOfManufacture</td>
         <td>@Vehicle.NumberOfOwners</td>
         <td>@Vehicle.Mileage</td>
+        @if (Vehicle.VehicleFeatures.Count == 0)
+        {
+            <td>This vehicle has no additional features</td>
+        }
+        else
+        {
+        @foreach (var v in Vehicle.VehicleFeatures)
+        {
+            <tr>@v.Feature.FeatureName</tr>
+        }
+        }
         <td>
-            <button type="button" class="btn btn-light" @onclick="@(()=> EditVehicle(Vehicle.VehicleId))">Edit</button>
-            <button type="button" class="btn btn-light" @onclick="@(async ()=> await DeleteVehicle(Vehicle))">Delete</button>
+            <button type="button" class="button-add" @onclick="@(()=> EditVehicle(Vehicle.VehicleId))">
+                <i class="fa-solid fa-pen-to-square" style="font-size:20px"></i>
+            </button>
+            <button type="button" class="button-add" @onclick="@(async ()=> await DeleteVehicle(Vehicle))">
+                <i class="fa-solid fa-trash" style="font-size:20px; position:relative; left:0.6px; top:0.5px"></i>
+            </button>
         </td>
     </tr>
 }

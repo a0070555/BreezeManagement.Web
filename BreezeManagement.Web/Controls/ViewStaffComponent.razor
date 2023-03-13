@@ -1,17 +1,20 @@
 ﻿@using BreezeManagement.CoreBusiness
 @inject IViewStaffByNameUseCase ViewStaffByNameUseCase
 
-<div class="input-group mb-3">
-    <input type="text"
-           class="form-control form-control-lg"
-           placeholder="Type staff name here to search"
-           @bind-value="staffNameToSearch"
-           @bind-value:event="oninput" />
-    <button type="button" class="input-group-text btn-success"
+<div class="page">
+    <div class="field field_v1">
+        <label for="staff" class="ha-screen-reader">Staff</label>
+        <input class="field__input" placeholder="Type staff name here to search" @bind-value="staffNameToSearch" bind-value:event="oninput" />
+        <span class="field__label-wrap" aria-hidden="true">
+            <span class="field__label">Staff</span>
+        </span>
+    </div>
+    <button type="button" class="button-add"
             @onclick="@( async()=> { await ViewStaff(); } )">
-        View
+        Search Staff
     </button>
 </div>
+
 @if (this.DisplaySearchResult && _staff != null && selectedStaff == null)
 {
         <div style="overflow-y:auto; max-height:300px; border:1px solid silver; padding-top:5px">

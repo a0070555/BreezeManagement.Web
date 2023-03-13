@@ -21,9 +21,10 @@ namespace BreezeManagement.Plugins.EFCore
 
         public async Task<IEnumerable<Staff>> GetStaffByName(string name)
         {
-            return await this.db.Staff.Where(s => s.FirstName.Contains(name, StringComparison.OrdinalIgnoreCase) || s.LastName.Contains(name, StringComparison.OrdinalIgnoreCase) || 
-            (s.FirstName + " " + s.LastName).Contains(name, StringComparison.OrdinalIgnoreCase) ||
-                                                 string.IsNullOrWhiteSpace(name)).ToListAsync();
+            return await this.db.Staff.Where(s => s.FirstName.Contains(name, StringComparison.OrdinalIgnoreCase) && s.IsDeleted == false|| 
+            s.LastName.Contains(name, StringComparison.OrdinalIgnoreCase) && s.IsDeleted == false || 
+            (s.FirstName + " " + s.LastName).Contains(name, StringComparison.OrdinalIgnoreCase) && s.IsDeleted == false ||
+                                                 string.IsNullOrWhiteSpace(name) && s.IsDeleted == false).ToListAsync();
         }
 
         public async Task AddStaffAsync(Staff staff)

@@ -14,46 +14,88 @@
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
 
-        <div class="form-group">
-            <label for="name">Registration</label>
-            <InputText id="name" @bind-Value="vehicle.Registration" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="name" class="ha-screen-reader">Registration</label>
+                <InputText id="name" @bind-Value="vehicle.Registration" class="field__input" placeholder="Registration number for the vehicle"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Registration</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="model">Model Name</label>
-            <InputText id="model" @bind-Value="vehicle.ModelName" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="model" class="ha-screen-reader">Model Name</label>
+                <InputText id="model" @bind-Value="vehicle.ModelName" class="field__input" placeholder="Model of the vehicle"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Model Name</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="colour">Colour</label>
-            <InputText id="colour" @bind-Value="vehicle.Colour" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="colour" class="ha-screen-reader">Colour</label>
+                <InputText id="colour" @bind-Value="vehicle.Colour" class="field__input" placeholder="Colour of the vehicle"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Colour</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="price">Price</label>
-            <InputNumber id="price" @bind-Value="vehicle.Price" class="form-control"></InputNumber>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="price" class="ha-screen-reader">Price</label>
+                <InputNumber id="price" @bind-Value="vehicle.Price" class="field__input" placeholder="Price of the vehicle"></InputNumber>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Price</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="dom">Date Of Manufacture</label>
-            <InputDate id="dom" @bind-Value="vehicle.DateOfManufacture" class="form-control"></InputDate>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="dom" class="ha-screen-reader">Date Of Manufacture</label>
+                <InputDate id="dom" @bind-Value="vehicle.DateOfManufacture" class="field__input" placeholder="Date of manufacture"></InputDate>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Date Of Manufacture</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="owners">Number Of Owners</label>
-            <InputNumber id="owners" @bind-Value="vehicle.NumberOfOwners" class="form-control"></InputNumber>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="owners" class="ha-screen-reader">Number Of Owners</label>
+                <InputNumber id="owners" @bind-Value="vehicle.NumberOfOwners" class="field__input" placeholder="Number of previous owners"></InputNumber>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Number Of Owners</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="miles">Mileage</label>
-            <InputNumber id="miles" @bind-Value="vehicle.Mileage" class="form-control"></InputNumber>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="miles" class="ha-screen-reader">Mileage</label>
+                <InputNumber id="miles" @bind-Value="vehicle.Mileage" class="field__input" placeholder="Vehicle mileage"></InputNumber>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Mileage</span>
+                </span>
+            </div>
         </div>
 
         <VehicleFeaturesComponent @ref="VehicleFeaturesComponent"
                                  OnFeatureSelected="OnFeatureSelected"></VehicleFeaturesComponent>
 
         <br />
-        <button type="submit" class="btn btn-primary">Save</button>
+        <div class="page">
+            <button class="button-save" type="submit">
+                <div class="icon">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <b style="font-size:15px">Create</b>
+            </button>
+        </div>
 
     </EditForm>
 }

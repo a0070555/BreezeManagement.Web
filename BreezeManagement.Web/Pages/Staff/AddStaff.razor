@@ -13,47 +13,96 @@
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
 
-        <div class="form-group">
-            <label for="fname">First Name</label>
-            <InputText id="fname" @bind-Value="staff.FirstName" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="fname" class="ha-screen-reader">First Name</label>
+                <InputText id="fname" @bind-Value="staff.FirstName" class="field__input" placeholder="Staff member's first name"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">First Name</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="lname">Last Name</label>
-            <InputText id="lname" @bind-Value="staff.LastName" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="lname" class="ha-screen-reader">Last Name</label>
+                <InputText id="lname" @bind-Value="staff.LastName" class="field__input" placeholder="Staff member's last name"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Last Name</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="pnum">Phone Number</label>
-            <InputText id="pnum" @bind-Value="staff.PhoneNumber" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="pnum" class="ha-screen-reader">Phone Number</label>
+                <InputText id="pnum" @bind-Value="staff.PhoneNumber" class="field__input" placeholder="Staff member's phone number"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Phone Number</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="dob">Date Of Birth</label>
-            <InputDate id="dob" @bind-Value="staff.DateOfBirth" class="form-control"></InputDate>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="dob" class="ha-screen-reader">Date Of Birth</label>
+                <InputDate id="dob" @bind-Value="staff.DateOfBirth" class="field__input" placeholder="Staff member's date of birth"></InputDate>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Date Of Birth</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="addr">Address</label>
-            <InputText id="addr" @bind-Value="staff.Address" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="addr" class="ha-screen-reader">Address</label>
+                <InputText id="addr" @bind-Value="staff.Address" class="field__input" placeholder="Staff member's address"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Address</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="title">Title</label>
-            <InputText id="title" @bind-Value="staff.Title" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="title" class="ha-screen-reader">Title</label>
+                <InputText id="title" @bind-Value="staff.Title" class="field__input" placeholder="Staff member's job title"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Title</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="email">Email</label>
-            <InputText id="email" @bind-Value="staff.Email" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="email" class="ha-screen-reader">Email</label>
+                <InputText id="email" @bind-Value="staff.Email" class="field__input" placeholder="Staff member's email address"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Email</span>
+                </span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="sales">Number Of Sales</label>
-            <InputNumber id="sales" @bind-Value="staff.NumberOfSales" class="form-control"></InputNumber>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="sales" class="ha-screen-reader">Number Of Sales</label>
+                <InputNumber id="sales" @bind-Value="staff.NumberOfSales" class="field__input" placeholder="Number of vehicle sales"></InputNumber>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Number Of Sales</span>
+                </span>
+            </div>
         </div>
         <br />
-        <button type="submit" class="btn btn-primary">Save</button>
+        
+        <div class="page">
+        <button class="button-save" type="submit">
+            <div class="icon">
+                <i class="fa-solid fa-plus"></i>
+            </div>
+            <b style="font-size:15px">Create</b>
+        </button>
+        </div>
+
     </EditForm>
 }
 

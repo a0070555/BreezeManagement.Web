@@ -3,7 +3,7 @@
 @inject NavigationManager NavigationManager
 @inject IViewVehiclesByNameUseCase ViewVehiclesByNameUseCase
 
-@attribute [Authorize(Policy = "StaffPolicy")]
+@attribute [Authorize]
 
 <h3>Vehicle List</h3>
 <br/>
@@ -22,6 +22,7 @@
                 <th>Date Of Manufacture</th>
                 <th>Number Of Owners</th>
                 <th>Mileage</th>
+                <th>Additional Features</th>
                 <th></th>
             </tr>
         </thead>
@@ -36,7 +37,7 @@
     </table>
 }
 <br/>
-<button type="button" class="btn btn-primary" @onclick="AddVehicle">Add Vehicle</button>
+<button type="button" class="button-add" @onclick="AddVehicle">Add Vehicle</button>
 
 
 @code {

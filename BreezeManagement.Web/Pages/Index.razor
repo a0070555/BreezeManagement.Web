@@ -1,14 +1,21 @@
 ﻿@page "/"
 @inject AuthenticationStateProvider AuthState
 @attribute [Authorize]
+<head>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="spectrum-background">
+<PageTitle>Breeze Management</PageTitle>
 
-<PageTitle>Quiz Manager</PageTitle>
+<div class="container" style="text-align:center">
+    <img src="Images/Logo.png" width="850" height="200">
+</div>
 
-<h1>Welcome, @Username!</h1>
+<img src="@Picture" width="100" height="100"> <h1>Welcome, @Username!</h1>
 You can only see this content if you're authenticated.
 <br />
-<img src="@Picture">
 
+</body>
 @code {
     private string Username = "Anonymous User";
     private string Picture = "";

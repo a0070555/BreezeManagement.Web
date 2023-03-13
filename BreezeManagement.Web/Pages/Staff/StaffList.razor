@@ -3,7 +3,7 @@
 @inject NavigationManager NavigationManager
 @inject IViewStaffByNameUseCase ViewStaffByNameUseCase
 
-@attribute [Authorize(Policy = "ManagerPolicy")]
+@attribute [Authorize]
 
 <h3>Staff List</h3>
 <br/>
@@ -36,7 +36,7 @@
     </table>
 }
 <br/>
-<button type="button" class="btn btn-primary" @onclick="AddStaff">Add Staff</button>
+<button type="button" class="button-add" @onclick="AddStaff">Add Staff</button>
 
 @code {
     private List<Staff>? listStaff;

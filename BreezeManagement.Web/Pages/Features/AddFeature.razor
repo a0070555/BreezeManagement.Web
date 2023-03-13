@@ -13,24 +13,45 @@
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
 
-        <div class="form-group">
-            <label for="name">Feature Name</label>
-            <InputText id="name" @bind-Value="feature.FeatureName" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="name" class="ha-screen-reader">Feature Name</label>
+                <InputText id="name" @bind-Value="feature.FeatureName" class="field__input" placeholder="Name of the feature"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Feature Name</span>
+                </span>
+            </div>
         </div>
 
-
-        <div class="form-group">
-            <label for="desc">Description</label>
-            <InputText id="desc" @bind-Value="feature.Description" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v2">
+                <label for="desc" class="ha-screen-reader">Description</label>
+                <InputText id="desc" @bind-Value="feature.Description" class="field__input" placeholder="Description of the feature"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Description</span>
+                </span>
+            </div>
         </div>
 
-
-        <div class="form-group">
-            <label for="price">Price</label>
-            <InputNumber id="price" @bind-Value="feature.AddedPrice" class="form-control"></InputNumber>
+        <div class="page">
+            <div class="field field_v3">
+                <label for="price" class="ha-screen-reader">Feature Price</label>
+                <InputNumber id="price" @bind-Value="feature.AddedPrice" class="field__input" placeholder="Price of the feature"></InputNumber>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Feature Price</span>
+                </span>
+            </div>
         </div>
         <br />
-        <button type="submit" class="btn btn-primary">Save</button>
+
+        <div class="page">
+        <button class="button-save" type="submit">
+            <div class="icon">
+                <i class="fa-solid fa-plus"></i>
+            </div>
+            <b style="font-size:15px">Create</b>
+        </button>
+        </div>
     </EditForm>
 }
 

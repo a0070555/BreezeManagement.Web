@@ -14,6 +14,7 @@ namespace BreezeManagement.CoreBusiness.Models
         [Required]
         public string FeatureName { get; set; }
 
+        [Required]
         public string? Description { get; set; }
 
         public double AddedPrice { get; set; }
