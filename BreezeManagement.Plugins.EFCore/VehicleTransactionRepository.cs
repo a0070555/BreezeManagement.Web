@@ -2,6 +2,7 @@
 using BreezeManagement.UseCases.PluginInterfaces;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,12 @@ namespace BreezeManagement.Plugins.EFCore
     {
         private readonly BreezeManagementContext db;
         private readonly IVehicleRepository vehicleRepository;
-
-        public VehicleTransactionRepository(BreezeManagementContext db, IVehicleRepository vehicleRepository)
+        private readonly IStaffRepository staffRepository;
+        public VehicleTransactionRepository(BreezeManagementContext db, IVehicleRepository vehicleRepository, IStaffRepository staffRepository)
         {
             this.db = db;
             this.vehicleRepository = vehicleRepository;
+            this.staffRepository = staffRepository;
         }
 
         public async Task<IEnumerable<VehicleTransaction>> GetVehicleTransactionsAsync(string vehicleName, DateTime? dateFrom, DateTime? dateTo, VehicleTransactionType? transactionType)
@@ -75,6 +77,14 @@ namespace BreezeManagement.Plugins.EFCore
                 UnitPrice = price,
                 ActivityType = VehicleTransactionType.SellVehicle
             });
+
+            var staff = await this.db.Staff.FirstOrDefaultAsync(x => x.Email.ToLower() == doneBy.ToLower());
+
+            if (staff != null)
+            {
+                staff.NumberOfSales++;
+            }
+
             vehicle.IsDeleted = true;
             await this.db.SaveChangesAsync();
         }

@@ -3,6 +3,9 @@
 @using BreezeManagement.UseCases.Interfaces.Vehicles;
 
 @inject ISellVehicleUseCase SellVehicleUseCase
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthState
+@inject IJSRuntime JsRuntime
 
 <ErrorMessageComponent ErrorMessage="@errorMessage"></ErrorMessageComponent>
 <h3>Sell Vehicle</h3>
@@ -13,25 +16,42 @@
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
 
-        <div class="form-group">
-            <label for="po">Sales Order Number</label>
-            <InputText id="po" @bind-Value="sellViewModel.SalesOrderNumber" class="form-control"></InputText>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="po" class="ha-screen-reader">Sales Order Number</label>
+                <InputText id="po" @bind-Value="sellViewModel.SalesOrderNumber" class="field__input" placeholder="Number of the sales order"></InputText>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Sales Order Number</span>
+                </span>
+            </div>
         </div>
 
-
-        <div class="form-group">
-            <label for="veh">Vehicle to Sell</label>
+        <div class="page">
+            <label for="veh">Vehicle to Sell: <InputText id="veh" class="field__input" @bind-Value="sellViewModel.VehicleName" disabled style="color:black"></InputText></label>
             <ViewVehiclesComponent OnSelectVehicle="OnSelectVehicle"
                                DisplaySearchResult="true"></ViewVehiclesComponent>
-            <InputText id="veh" class="form-control" @bind-Value="sellViewModel.VehicleName" disabled></InputText>
         </div>
 
-        <div class="form-group">
-            <label for="price">Price</label>
-            <InputNumber id="price" @bind-Value="sellViewModel.VehiclePrice" class="form-control"></InputNumber>
+        <div class="page">
+            <div class="field field_v1">
+                <label for="price" class="ha-screen-reader">Price</label>
+                <InputNumber id="price" @bind-Value="sellViewModel.VehiclePrice" class="field__input" placeholder="Price the vehicle is being sold at"></InputNumber>
+                <span class="field__label-wrap" aria-hidden="true">
+                    <span class="field__label">Price</span>
+                </span>
+            </div>
         </div>
+
         <br />
-        <button type="submit" class="btn btn-primary">Sell</button>
+
+        <div class="page">
+            <button class="button-save" type="submit">
+                <div class="icon">
+                    <i class="fa-solid fa-sack-dollar"></i>
+                </div>
+                <b style="font-size:15px">Sell</b>
+            </button>
+        </div>
 
     </EditForm>
 }
@@ -41,24 +61,37 @@
     private SellViewModel sellViewModel = new SellViewModel();
     private Vehicle selectedVehicle;
     private string errorMessage;
+    private string Username = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthState.GetAuthenticationStateAsync();
+
+        Username = state.User.Identity.Name ?? string.Empty;
+    }
 
     private void OnValidSubmit()
     {
         SellVehicleUseCase.ExecuteAsync(this.sellViewModel.SalesOrderNumber,
             this.selectedVehicle,
-            "Frank"
+            Username
         );
+
+        JsRuntime.InvokeAsync<string>("alert", $"Vehicle {sellViewModel.VehicleName.ToString()} sold!");
 
         this.sellViewModel = new SellViewModel();
         this.selectedVehicle = null;
         this.errorMessage = string.Empty;
+
+        NavigationManager.NavigateTo("/vehicles");
+        
     }
 
-    private void OnSelectVehicle(Vehicle product)
+    private void OnSelectVehicle(Vehicle vehicle)
     {
-        this.selectedVehicle = product;
-        sellViewModel.VehicleId = product.VehicleId;
-        sellViewModel.VehicleName = product.Registration;
-        sellViewModel.VehiclePrice = product.Price;
+        this.selectedVehicle = vehicle;
+        sellViewModel.VehicleId = vehicle.VehicleId;
+        sellViewModel.VehicleName = vehicle.Registration;
+        sellViewModel.VehiclePrice = vehicle.Price;
     }
 }

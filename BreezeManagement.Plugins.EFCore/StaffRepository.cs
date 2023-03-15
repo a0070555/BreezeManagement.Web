@@ -1,6 +1,7 @@
 ﻿using BreezeManagement.CoreBusiness.Models;
 using BreezeManagement.UseCases.Interfaces;
 using BreezeManagement.UseCases.PluginInterfaces;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
