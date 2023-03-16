@@ -21,8 +21,12 @@
         <ul style="list-style-type:none">
             @foreach (var feat in _features)
             {
-                <li style="cursor:pointer" @onclick="@(async() => { await SelectFeature(feat); })"
+            <button type="button" class="button-21"> 
+                   <li style="cursor:pointer" @onclick="@(async() => { await SelectFeature(feat); })"
             @key="feat.FeatureId">@feat.FeatureName</li>
+            </button>
+@*                <li style="cursor:pointer" @onclick="@(async() => { await SelectFeature(feat); })"
+            @key="feat.FeatureId">@feat.FeatureName</li>*@
             }
         </ul>
     </div>

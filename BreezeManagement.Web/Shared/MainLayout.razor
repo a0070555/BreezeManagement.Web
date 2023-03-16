@@ -34,20 +34,15 @@
                 </li>
                 <li class="nav-item dropdown">
                     <NavLink class="nav-link dropdown-toggle" href="#" @onclick="ToggleSubNavMenu" id="navbarDropdown" >
-                        <i class="fa-sharp fa-solid fa-money-bill"></i> Activities
+                        <i class="fa-solid fa-money-bill-transfer"></i> Transactions
                     </NavLink>
 
                     @if (expandSubNavSettings)
                     {
                         <ul class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="ToggleSubNavMenu">
                             <li class="nav-item">
-                                <NavLink class="dropdown-item" href="createfeature">
-                                    <span class="oi oi-fork" aria-hidden="true"></span> Placeholder
-                                </NavLink>
-                            </li>
-                            <li class="nav-item">
                                 <NavLink class="dropdown-item" href="sellvehicle">
-                                    <span class="oi oi-command" aria-hidden="true"></span> Sell Vehicle
+                                        <i class="fa-solid fa-handshake"></i> Sell Vehicle
                                 </NavLink>
                             </li>
                         </ul>
@@ -61,13 +56,8 @@
                     {
                         <ul class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="ToggleSubNavMenu1">
                             <li class="nav-item">
-                                <NavLink class="dropdown-item" href="somereport">
-                                    <span class="oi oi-fork" aria-hidden="true"></span> Inventory Transactions
-                                </NavLink>
-                            </li>
-                            <li class="nav-item">
-                                <NavLink class="dropdown-item" href="salesreport">
-                                    <span class="oi oi-command" aria-hidden="true"></span> Product Transactions
+                                <NavLink class="dropdown-item" href="vehiclereport">
+                                        <i class="fa-solid fa-chart-line"></i> Sales Reports
                                 </NavLink>
                             </li>
                         </ul>
@@ -78,6 +68,7 @@
         </div>
     </div>
 </nav>
+
 <br/>
 <main class="spectrum-background">
     <br/>

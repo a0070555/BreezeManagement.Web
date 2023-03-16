@@ -3,6 +3,7 @@
 
 @inject IAddVehicleUseCase AddVehicleUseCase
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 @attribute [Authorize]
 
@@ -84,8 +85,10 @@
             </div>
         </div>
 
-        <VehicleFeaturesComponent @ref="VehicleFeaturesComponent"
-                                 OnFeatureSelected="OnFeatureSelected"></VehicleFeaturesComponent>
+        <VehicleFeaturesComponent 
+            @ref="VehicleFeaturesComponent"
+            OnFeatureSelected="OnFeatureSelected"
+            ></VehicleFeaturesComponent>
 
         <br />
         <div class="page">

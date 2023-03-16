@@ -22,7 +22,10 @@ namespace BreezeManagement.UseCases.Vehicles
 
         public async Task ExecuteAsync(Vehicle vehicle)
         {
-            if (vehicle == null) return;
+            if (vehicle == null)
+            {
+                return;
+            }
 
             await vehicleFeature.AddVehicleAsync(vehicle);
         }

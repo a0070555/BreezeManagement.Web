@@ -9,11 +9,11 @@
         <td>@Feature.Description</td>
         <td>@Feature.AddedPrice.ToString("c")</td>
         <td>
-            <button type="button" class="button-add" @onclick="@(()=> EditFeature(Feature.FeatureId))">
-                    <i class="fa-solid fa-pen-to-square" style="font-size:20px"></i>
+            <button type="button" class="button-21" @onclick="@(()=> EditFeature(Feature.FeatureId))">
+                    <i class="fa-solid fa-pen-to-square" style="font-size:20px;"></i>
             </button>
-            <button type="button" class="button-add" @onclick="@(async ()=> await DeleteFeature(Feature))">
-                    <i class="fa-solid fa-trash" style="font-size:20px; position:relative; left:0.6px; top:0.5px"></i>
+            <button type="button" class="button-21" @onclick="@(async ()=> await DeleteFeature(Feature))">
+                    <i class="fa-solid fa-trash" style="font-size:20px;"></i>
             </button>
         </td>
     </tr>

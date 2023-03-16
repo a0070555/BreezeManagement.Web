@@ -1,0 +1,77 @@
+﻿@page "/vehiclereport"
+
+@inject ISearchVehicleTransactionsUseCase SearchVehicleTransactionsUseCase
+@inject IJSRuntime JSRuntime
+
+
+<h3>Vehicle Sales Report</h3>
+<br/>
+
+<div id="printarea">
+<div class="row">
+    <div class="col">
+        <label for="veh">Registration</label>
+        <input type="text" id="veh" class="form-control" @bind-value="vehReg" />
+    </div>
+    <div class="col">
+        <label for="df">Date From</label>
+        <input type="date" id="df" class="form-control" @bind-value="dateFrom" />
+    </div>
+    <div class="col">
+        <label for="dt">Date To</label>
+        <input type="date" id="dt" class="form-control" @bind-value="dateTo" />
+    </div>
+    <div class="col">
+        <label>&nbsp;</label>
+        <button type="button" class="button-21 form-control" @onclick="SearchVehicles">Search</button>
+    </div>
+    <div class="col">
+        <label>&nbsp;</label>
+        <button type="button" class="button-21 form-control" @onclick="PrintReport">Print</button>
+    </div>
+</div>
+
+<br/>
+    @if (vehicleTransactions != null)
+    {
+        <table class="table" style="border-color:black">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Registration</th>
+                    <th>Sales Order Number</th>
+                    <th>Done By</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pt in vehicleTransactions)
+                {
+                    <tr>
+                        <td>@pt.TransactionDate.ToString("dd/mm/yyyy hh:mm tt")</td>
+                        <td>@pt.Vehicle.Registration</td>
+                        <td>@pt.SalesOrderNumber</td>
+                        <td>@pt.DoneBy</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+
+@code {
+    private string vehReg;
+    private DateTime dateFrom;
+    private DateTime dateTo;
+    private IEnumerable<VehicleTransaction> vehicleTransactions;
+
+    private async Task SearchVehicles()
+    {
+        vehicleTransactions = await SearchVehicleTransactionsUseCase.ExecuteAsync(vehReg, dateFrom, dateTo);
+    }
+
+    private void PrintReport()
+    {
+        JSRuntime.InvokeVoidAsync("print");
+    }
+}

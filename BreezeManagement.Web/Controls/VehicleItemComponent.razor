@@ -17,17 +17,30 @@
         }
         else
         {
-        @foreach (var v in Vehicle.VehicleFeatures)
-        {
-            <tr>@v.Feature.FeatureName</tr>
+            <li class="button-21 dropdown-toggle form-control" href="/vehicles" @onclick="ToggleSubNavMenu" id="dropdown" style="block-size:25px; position:relative; top:8px;">
+                Features
+            </li>
         }
+            @if (expandSubNavSettings)
+            {
+            <ul class="dropdown-menu show" aira-labelledby="dropdown" @onclick="ToggleSubNavMenu" style="background-color:#3EB2FD; 
+            background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%); font-family: CircularStd,sans-serif; font-size:0.8rem">
+                <li class="nav-item">
+                    @foreach (var v in Vehicle.VehicleFeatures)
+                    {
+                        <li class="dropdown-item">
+                            <option style="color:white" disabled>@v.Feature.FeatureName</option>
+                        </li>
+                    }
+                </li>
+            </ul>
         }
         <td>
-            <button type="button" class="button-add" @onclick="@(()=> EditVehicle(Vehicle.VehicleId))">
+            <button type="button" class="button-21" @onclick="@(()=> EditVehicle(Vehicle.VehicleId))">
                 <i class="fa-solid fa-pen-to-square" style="font-size:20px"></i>
             </button>
-            <button type="button" class="button-add" @onclick="@(async ()=> await DeleteVehicle(Vehicle))">
-                <i class="fa-solid fa-trash" style="font-size:20px; position:relative; left:0.6px; top:0.5px"></i>
+            <button type="button" class="button-21" @onclick="@(async ()=> await DeleteVehicle(Vehicle))">
+                <i class="fa-solid fa-trash" style="font-size:20px;"></i>
             </button>
         </td>
     </tr>
@@ -52,6 +65,28 @@
         await DeleteVehicleUseCase.ExecuteAsync(vehicle.VehicleId);
 
         await OnVehicleDeleted.InvokeAsync();
+    }
+
+    bool collapseNavMenu = true;
+    private bool expandSubNavSettings;
+    private bool expandSubNavSettings1;
+
+    string baseMenuClass = "navbar-collapse offcanvas-collapse";
+
+    string NavMenuCssClass => baseMenuClass + (collapseNavMenu ? " collapse" : "");
+
+    void ToggleNavMenu()
+    {
+        if (!expandSubNavSettings)
+        {
+            collapseNavMenu = !collapseNavMenu;
+        }
+    }
+
+    void ToggleSubNavMenu()
+    {
+        expandSubNavSettings1 = false;
+        expandSubNavSettings = !expandSubNavSettings;
     }
 
 }

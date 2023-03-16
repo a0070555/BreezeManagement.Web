@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using BreezeManagement.UseCases.PluginInterfaces;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Internal;
+using Microsoft.AspNetCore.Components;
 
 namespace BreezeManagement.Plugins.EFCore
 {
     public class VehicleRepository : IVehicleRepository
     {
         private readonly BreezeManagementContext db;
-
         public VehicleRepository(BreezeManagementContext db)
         {
             this.db = db;

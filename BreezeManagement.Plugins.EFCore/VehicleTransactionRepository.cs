@@ -23,7 +23,7 @@ namespace BreezeManagement.Plugins.EFCore
             this.staffRepository = staffRepository;
         }
 
-        public async Task<IEnumerable<VehicleTransaction>> GetVehicleTransactionsAsync(string vehicleName, DateTime? dateFrom, DateTime? dateTo, VehicleTransactionType? transactionType)
+        public async Task<IEnumerable<VehicleTransaction>> GetVehicleTransactionsAsync(string vehicleName, DateTime? dateFrom, DateTime? dateTo)
         {
             if (dateTo.HasValue) dateTo = dateTo.Value.AddDays(1);
 
@@ -32,8 +32,7 @@ namespace BreezeManagement.Plugins.EFCore
                         where
                             (string.IsNullOrWhiteSpace(vehicleName) || veh.Registration.ToLower().IndexOf(vehicleName.ToLower()) >= 0) &&
                             (!dateFrom.HasValue || vt.TransactionDate >= dateFrom.Value.Date) &&
-                            (!dateTo.HasValue || vt.TransactionDate <= dateTo.Value.Date) &&
-                            (!transactionType.HasValue || vt.ActivityType == transactionType)
+                            (!dateTo.HasValue || vt.TransactionDate <= dateTo.Value.Date)
                         select vt;
 
             return await query.Include(x => x.Vehicle).ToListAsync();
@@ -58,7 +57,6 @@ namespace BreezeManagement.Plugins.EFCore
             {
                 CreationNumber = creationNumber,
                 VehicleId = vehicle.VehicleId,
-                ActivityType = VehicleTransactionType.CreateVehicle,
                 TransactionDate = DateTime.Now,
                 DoneBy = doneBy,
                 UnitPrice = price
@@ -74,8 +72,7 @@ namespace BreezeManagement.Plugins.EFCore
                 VehicleId = vehicle.VehicleId,
                 TransactionDate = DateTime.Now,
                 DoneBy = doneBy,
-                UnitPrice = price,
-                ActivityType = VehicleTransactionType.SellVehicle
+                UnitPrice = price
             });
 
             var staff = await this.db.Staff.FirstOrDefaultAsync(x => x.Email.ToLower() == doneBy.ToLower());

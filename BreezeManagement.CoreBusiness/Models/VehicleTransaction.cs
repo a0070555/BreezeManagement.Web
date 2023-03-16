@@ -14,9 +14,6 @@ namespace BreezeManagement.CoreBusiness.Models
         [Required]
         public int VehicleId { get; set; }
 
-        [Required]
-        public VehicleTransactionType ActivityType { get; set; }
-
         public string? CreationNumber { get; set; }
 
         public string? SalesOrderNumber { get; set; }

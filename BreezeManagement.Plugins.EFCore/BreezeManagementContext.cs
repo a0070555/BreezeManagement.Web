@@ -33,7 +33,7 @@ namespace BreezeManagement.Plugins.EFCore
             modelBuilder.Entity<VehicleFeature>()
                 .HasOne(vf => vf.Feature)
                 .WithMany(f => f.VehicleFeatures)
-                .HasForeignKey(vf => vf.VehicleId);
+                .HasForeignKey(vf => vf.FeatureId);
 
             modelBuilder.Entity<Feature>().HasData(
                 new Feature { FeatureId = 1, FeatureName = "Sun Roof", AddedPrice = 500, Description = "Adds a luxurious sunroof to the vehicle" },

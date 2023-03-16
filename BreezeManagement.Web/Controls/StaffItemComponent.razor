@@ -13,10 +13,10 @@
         <td>@Staff.Email</td>
         <td>@Staff.NumberOfSales</td>
         <td>
-            <button type="button" class="button-add" @onclick="@(()=> EditStaff(Staff.StaffId))">
+            <button type="button" class="button-21" @onclick="@(()=> EditStaff(Staff.StaffId))">
                 <i class="fa-solid fa-pen-to-square" style="font-size:20px"></i>
             </button>
-            <button type="button" class="button-add" @onclick="@(async ()=> await DeleteStaff(Staff))">
+            <button type="button" class="button-21" @onclick="@(async ()=> await DeleteStaff(Staff))">
                     <i class="fa-solid fa-trash" style="font-size:20px; position:relative; left:0.6px; top:0.5px"></i>
             </button>
         </td>

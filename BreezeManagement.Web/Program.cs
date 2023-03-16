@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using BreezeManagement.UseCases.Interfaces.VehicleTransactions;
+using BreezeManagement.UseCases.Reports;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +59,8 @@ builder.Services.AddTransient<IViewStaffByNameUseCase, ViewStaffByNameUseCase>()
 builder.Services.AddTransient<IAddStaffUseCase, AddStaffUseCase>();
 builder.Services.AddTransient<IEditStaffUseCase, EditStaffUseCase>();
 builder.Services.AddTransient<IDeleteStaffUseCase, DeleteStaffUseCase>();
+
+builder.Services.AddTransient<ISearchVehicleTransactionsUseCase, SearchVehicleTransactionsUseCase>();
 
 builder.Services.AddAuthentication(options =>
 {

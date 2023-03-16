@@ -5,8 +5,8 @@
 
 @inject NavigationManager NavigationManager
 @inject IViewFeaturesByNameUseCase ViewFeaturesByNameUseCase
-<main class="spectrum-background">
-<h3>Feature List</h3>
+
+<h3>Features</h3>
 <br/>
 <ViewFeaturesComponent
     OnSearchFeatures="OnSearchFeatures"></ViewFeaturesComponent>
@@ -34,7 +34,7 @@
 }
 <br/>
 <button type="button" class="button-add" @onclick="AddFeature">Add Feature</button>
-</main>
+
 @code {
     private List<Feature>? listFeatures;
 

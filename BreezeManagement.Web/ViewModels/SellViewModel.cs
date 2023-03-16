@@ -11,7 +11,7 @@ namespace BreezeManagement.Web.ViewModels
         public int VehicleId { get; set; }
 
         [Required]
-        public string VehicleName { get; set; }
+        public string VehicleRegistration { get; set; }
 
         public double VehiclePrice { get; set; }
     }
