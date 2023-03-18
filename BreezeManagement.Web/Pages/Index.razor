@@ -1,5 +1,10 @@
 ﻿@page "/"
 @inject AuthenticationStateProvider AuthState
+@inject IViewVehiclesByNameUseCase ViewVehiclesByNameUseCase
+@inject ISearchVehicleTransactionsUseCase SearchVehicleTransactionsUseCase
+@inject IViewStaffByNameUseCase ViewStaffByNameUseCase
+@inject NavigationManager NavigationManager
+
 @attribute [Authorize]
 <head>
     <link rel="stylesheet" href="~/css/site.css" />
@@ -11,20 +16,51 @@
     <img src="Images/Logo.png" width="200" height="75" style="position:absolute; right:24px">
 </div>
 
-<div class="container">
-<img src="@Picture" width="100" height="100" style="position:absolute; top:75px; left:16px"> 
-<h1>Welcome, @Username!</h1>
-You can only see this content if you're authenticated.
+<div id="login-container">
+  <div class="profile-img" style="background:url(@Picture)"></div>
+  <h1>
+    Rushdi Abdelbaqi
+  </h1>
+  <div class="description">
+        Text here
+  </div>
+  <footer>
+  </footer>
 </div>
+
+<div id="login-container" style="width:1000px; position:absolute; right:20px; top:95px">
+
+    <p>Total number of vehicles: @listVehicles.Count.ToString()</p> 
+    <button class="button-21" @onclick="VehiclePage" style="width:190px">All Vehicles  <i class="fa-solid fa-arrow-right"></i></button>
+
+    <p>Total sales today: @soldVehicles.Count.ToString()</p>
+    <button class="button-21" @onclick="SalesPage" style="width:190px">Sales Reports  <i class="fa-solid fa-arrow-right"></i></button>
+    
+    @if (Username.Contains("manager"))
+    {
+        <p>Total number of staff: @listStaff.Count.ToString()</p>
+        <button class="button-21" @onclick="StaffPage" style="width:190px">All Staff  <i class="fa-solid fa-arrow-right"></i></button>
+    }
+
+    <footer>
+    </footer>
+</div>
+
 <br />
 
 
 @code {
     private string Username = "Anonymous User";
     private string Picture = "";
+    private List<Vehicle>? listVehicles;
+    private List<Staff>? listStaff;
+    private List<VehicleTransaction>? soldVehicles;
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadVehicles();
+        await LoadStaff();
+        await LoadSoldVehicles();
         var state = await AuthState.GetAuthenticationStateAsync();
 
         Username = state.User.Identity.Name ?? string.Empty;
@@ -35,5 +71,38 @@ You can only see this content if you're authenticated.
                     .FirstOrDefault() ?? string.Empty;
 
         await base.OnInitializedAsync();
+    }
+
+    private async Task LoadVehicles()
+    {
+        var vehs = await ViewVehiclesByNameUseCase.ExecuteAsync();
+        this.listVehicles = vehs.ToList();
+    }
+
+    private async Task LoadStaff()
+    {
+        var staff = await ViewStaffByNameUseCase.ExecuteAsync();
+        this.listStaff = staff.ToList();
+    }
+
+    private async Task LoadSoldVehicles()
+    {
+        var soldVehs = await SearchVehicleTransactionsUseCase.ExecuteAsync("", DateTime.Today , DateTime.Today);
+        this.soldVehicles = soldVehs.ToList();
+    }
+
+    private void VehiclePage()
+    {
+        NavigationManager.NavigateTo("/vehicles");
+    }
+
+    private void SalesPage()
+    {
+        NavigationManager.NavigateTo("/vehiclereport");
+    }
+
+    private void StaffPage()
+    {
+        NavigationManager.NavigateTo("/staff");
     }
 }

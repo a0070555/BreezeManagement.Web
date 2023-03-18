@@ -1,7 +1,6 @@
 ﻿@page "/features"
 
 @attribute [Authorize]
-@*@attribute [Authorize(Roles = "staff")]*@
 
 @inject NavigationManager NavigationManager
 @inject IViewFeaturesByNameUseCase ViewFeaturesByNameUseCase
@@ -33,7 +32,7 @@
     </table>
 }
 <br/>
-<button type="button" class="button-add" @onclick="AddFeature">Add Feature</button>
+<button type="button" class="button-add" @onclick="AddFeature">Add New</button>
 
 @code {
     private List<Feature>? listFeatures;

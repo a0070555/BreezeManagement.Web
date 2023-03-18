@@ -23,11 +23,15 @@
     </div>
     <div class="col">
         <label>&nbsp;</label>
-        <button type="button" class="button-21 form-control" @onclick="SearchVehicles">Search</button>
+            <button type="button" class="button-21 form-control" @onclick="SearchVehicles">
+                <i class="fa-solid fa-magnifying-glass"></i> Search
+                </button>
     </div>
     <div class="col">
         <label>&nbsp;</label>
-        <button type="button" class="button-21 form-control" @onclick="PrintReport">Print</button>
+            <button type="button" class="button-21 form-control" @onclick="PrintReport">
+                <i class="fa-solid fa-print"></i> Print
+                </button>
     </div>
 </div>
 
@@ -40,6 +44,7 @@
                     <th>Date</th>
                     <th>Registration</th>
                     <th>Sales Order Number</th>
+                    <th>Sale Price</th>
                     <th>Done By</th>
                 </tr>
             </thead>
@@ -50,6 +55,7 @@
                         <td>@pt.TransactionDate.ToString("dd/mm/yyyy hh:mm tt")</td>
                         <td>@pt.Vehicle.Registration</td>
                         <td>@pt.SalesOrderNumber</td>
+                        <td>@pt.UnitPrice</td>
                         <td>@pt.DoneBy</td>
                     </tr>
                 }

@@ -18,6 +18,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using BreezeManagement.UseCases.Interfaces.VehicleTransactions;
 using BreezeManagement.UseCases.Reports;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection;
+using BreezeManagement.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,8 +30,8 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddDbContext<BreezeManagementContext>(options =>
 {
-    options.UseInMemoryDatabase("BreezeManagement");
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("InventoryManagement"));
+    //options.UseInMemoryDatabase("BreezeManagement");
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BreezeManagement"));
 });
 
 //Repositories
