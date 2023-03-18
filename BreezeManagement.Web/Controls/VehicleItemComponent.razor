@@ -11,16 +11,16 @@
         <td>@Vehicle.DateOfManufacture</td>
         <td>@Vehicle.NumberOfOwners</td>
         <td>@Vehicle.Mileage</td>
-        @if (Vehicle.VehicleFeatures.Count == 0)
+@*        @if (Vehicle.VehicleFeatures.Count == 0)
         {
             <td>This vehicle has no additional features</td>
         }
         else
-        {
+        {*@
             <li class="button-21 dropdown-toggle form-control" href="/vehicles" @onclick="ToggleSubNavMenu" id="dropdown" style="block-size:25px; position:relative; top:8px;">
                 Features
             </li>
-        }
+
             @if (expandSubNavSettings)
             {
             <ul class="dropdown-menu show" aira-labelledby="dropdown" @onclick="ToggleSubNavMenu" style="background-color:#3EB2FD; 

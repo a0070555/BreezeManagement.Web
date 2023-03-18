@@ -42,10 +42,6 @@ namespace BreezeManagement.Plugins.EFCore
                 new Feature { FeatureId = 4, FeatureName = "WiFi", AddedPrice = 500, Description = "Adds the option of in-car wifi" }
                 );
 
-            modelBuilder.Entity<Vehicle>().HasData(
-                new Vehicle { VehicleId = 1, Registration = "KJHG56A", ModelName = "Model A", Colour = "Red", Mileage = 5000, NumberOfOwners = 12, Price = 15000, DateOfManufacture = DateTime.Now }
-                );
-
             modelBuilder.Entity<VehicleFeature>().HasData(
                 new VehicleFeature { FeatureId = 1, VehicleId = 1 }
                 );

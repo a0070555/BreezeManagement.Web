@@ -30,7 +30,7 @@
 
 <div id="login-container" style="width:1000px; position:absolute; right:20px; top:95px">
 
-    <p>Total number of vehicles: @listVehicles.Count.ToString()</p> 
+@*    <p>Total number of vehicles: @listVehicles.Count.ToString()</p> 
     <button class="button-21" @onclick="VehiclePage" style="width:190px">All Vehicles  <i class="fa-solid fa-arrow-right"></i></button>
 
     <p>Total sales today: @soldVehicles.Count.ToString()</p>
@@ -40,7 +40,7 @@
     {
         <p>Total number of staff: @listStaff.Count.ToString()</p>
         <button class="button-21" @onclick="StaffPage" style="width:190px">All Staff  <i class="fa-solid fa-arrow-right"></i></button>
-    }
+    }*@
 
     <footer>
     </footer>
@@ -58,9 +58,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadVehicles();
-        await LoadStaff();
-        await LoadSoldVehicles();
+        //await LoadVehicles();
+        //await LoadStaff();
+        //await LoadSoldVehicles();
         var state = await AuthState.GetAuthenticationStateAsync();
 
         Username = state.User.Identity.Name ?? string.Empty;
