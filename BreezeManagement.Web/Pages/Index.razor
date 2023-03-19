@@ -16,32 +16,85 @@
     <img src="Images/Logo.png" width="200" height="75" style="position:absolute; right:24px">
 </div>
 
-<div id="login-container">
+    <h1 style="position:center">Welcome, @Username!</h1>
+
+
+
+<div id="login-container" style="position:absolute; top:175px">
+    <h1>User Profile</h1>
   <div class="profile-img" style="background:url(@Picture)"></div>
-  <h1>
-    Rushdi Abdelbaqi
-  </h1>
-  <div class="description">
-        Text here
+    <div class="description" style="position:absolute; top:75px">
+        @if (listStaff != null)
+        {
+            @foreach (var s in listStaff)
+            {
+                @if (s.Email == Username || s.FullName == Username)
+                {
+                    <p>Username: @Username</p>
+                    <p>Full Name: @s.FullName</p>
+                    <p>Title: @s.Title</p>
+                    <p>Phone Number: @s.PhoneNumber</p>
+                    <p>Date Of Birth: @s.DateOfBirth</p>
+                    <p>Email address: @s.Email</p>
+                    <p>Total Number of Sales: @s.NumberOfSales</p>
+                }
+            }
+        }
   </div>
   <footer>
   </footer>
 </div>
 
-<div id="login-container" style="width:1000px; position:absolute; right:20px; top:95px">
-
-@*    <p>Total number of vehicles: @listVehicles.Count.ToString()</p> 
-    <button class="button-21" @onclick="VehiclePage" style="width:190px">All Vehicles  <i class="fa-solid fa-arrow-right"></i></button>
-
-    <p>Total sales today: @soldVehicles.Count.ToString()</p>
-    <button class="button-21" @onclick="SalesPage" style="width:190px">Sales Reports  <i class="fa-solid fa-arrow-right"></i></button>
+<div id="login-container" style="width:227px; position:absolute; left:420px; top:175px">
+    <h1>Statistics</h1>
+    @if (listVehicles != null)
+    {
+        <p>Total number of vehicles: @listVehicles.Count.ToString()</p> 
+        <button class="button-21" @onclick="VehiclePage" style="width:190px">All Vehicles  <i class="fa-solid fa-arrow-right"></i></button>
+    }
     
-    @if (Username.Contains("manager"))
+    @if (soldVehicles != null)
+    {
+        <p>Total sales today: @soldVehicles.Count.ToString()</p>
+        <button class="button-21" @onclick="SalesPage" style="width:190px">Sales Reports  <i class="fa-solid fa-arrow-right"></i></button>
+    }
+    
+    
+    @if (listStaff != null)
     {
         <p>Total number of staff: @listStaff.Count.ToString()</p>
         <button class="button-21" @onclick="StaffPage" style="width:190px">All Staff  <i class="fa-solid fa-arrow-right"></i></button>
-    }*@
+    }
 
+    <footer>
+    </footer>
+</div>
+
+<div id="login-container" style="width:850px; height:590px; position:absolute; left:668px; top:175px">
+
+    @if (listVehicles != null)
+    {
+        <h1>Vehicle List</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Registration</th>
+                    <th>Model Name</th>
+                    <th>Colour</th>
+                    <th>Price</th>
+                    <th>Date Of Manufacture</th>
+                    <th>Number Of Owners</th>
+                    <th>Mileage</th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (var v in listVehicles)
+            {
+                <VehicleItemComponentViewOnly Vehicle="v"></VehicleItemComponentViewOnly>
+            }
+        </table>
+    }
+    
     <footer>
     </footer>
 </div>
@@ -58,9 +111,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //await LoadVehicles();
-        //await LoadStaff();
-        //await LoadSoldVehicles();
+        await LoadVehicles();
+        await LoadStaff();
+        await LoadSoldVehicles();
         var state = await AuthState.GetAuthenticationStateAsync();
 
         Username = state.User.Identity.Name ?? string.Empty;

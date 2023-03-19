@@ -20,9 +20,9 @@ namespace BreezeManagement.UseCases.Activities
             this.vehicleRepository = vehicleRepository;
         }
 
-        public async Task ExecuteAsync(string salesOrderNumber, Vehicle vehicle, string doneBy)
+        public async Task ExecuteAsync(string salesOrderNumber, Vehicle vehicle, double price, string doneBy)
         {
-            await vehicleTransactionRepository.SellVehicleAsync(salesOrderNumber, vehicle, vehicle.Price, doneBy);
+            await vehicleTransactionRepository.SellVehicleAsync(salesOrderNumber, vehicle, price, doneBy);
 
             await vehicleRepository.UpdateVehicleAsync(vehicle);
         }

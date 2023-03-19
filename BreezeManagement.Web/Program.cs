@@ -34,7 +34,6 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddDbContext<BreezeManagementContext>(options =>
 {
-    //options.UseInMemoryDatabase("BreezeManagement");
     options.UseSqlServer(builder.Configuration.GetConnectionString("BreezeManagement"));
 });
 
@@ -42,7 +41,6 @@ builder.Services.AddDbContext<BreezeManagementContext>(options =>
 builder.Services.AddTransient<IFeatureRepository, FeatureRepository>();
 builder.Services.AddTransient<IVehicleRepository, VehicleRepository>();
 builder.Services.AddTransient<IStaffRepository, StaffRepository>();
-builder.Services.AddTransient<IFeatureAdditionRepository, FeatureAdditionRepository>();
 builder.Services.AddTransient<IVehicleTransactionRepository, VehicleTransactionRepository>();
 
 //Use Cases
@@ -51,14 +49,12 @@ builder.Services.AddTransient<IViewFeaturesByIdUseCase, ViewFeaturesByIdUseCase>
 builder.Services.AddTransient<IAddFeatureUseCase, AddFeatureUseCase>();
 builder.Services.AddTransient<IEditFeatureUseCase, EditFeatureUseCase>();
 builder.Services.AddTransient<IDeleteFeatureUseCase, DeleteFeatureUseCase>();
-builder.Services.AddTransient<ICreateFeatureUseCase, CreateFeatureUseCase>();
 
 builder.Services.AddTransient<IViewVehiclesByNameUseCase, ViewVehiclesByNameUseCase>();
 builder.Services.AddTransient<IViewVehiclesByIdUseCase, ViewVehiclesByIdUseCase>();
 builder.Services.AddTransient<IAddVehicleUseCase, AddVehicleUseCase>();
 builder.Services.AddTransient<IEditVehicleUseCase, EditVehicleUseCase>();
 builder.Services.AddTransient<IDeleteVehicleUseCase, DeleteVehicleUseCase>();
-builder.Services.AddTransient<ICreateVehicleUseCase, CreateVehicleUseCase>();
 builder.Services.AddTransient<ISellVehicleUseCase, SellVehicleUseCase>();
 
 builder.Services.AddTransient<IViewStaffByIdUseCase, ViewStaffByIdUseCase>();

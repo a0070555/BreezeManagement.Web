@@ -1,0 +1,20 @@
+﻿@inject NavigationManager NavigationManager
+
+@if (Feature != null)
+{
+
+    <tr>
+        <td>@Feature.FeatureName</td>
+        <td>@Feature.Description</td>
+        <td>@Feature.AddedPrice.ToString("c")</td>
+    </tr>
+}
+
+@code {
+
+    [Parameter]
+    public Feature? Feature { get; set; }
+
+
+
+}

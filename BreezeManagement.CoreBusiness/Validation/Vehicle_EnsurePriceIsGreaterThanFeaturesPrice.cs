@@ -17,7 +17,7 @@ namespace BreezeManagement.CoreBusiness.Validation
             {
                 if (!vehicle.ValidatePricing())
                 {
-                    return new ValidationResult($"The vehicle's price is less than the summary of its features: {vehicle.TotalFeatureCost} !",
+                    return new ValidationResult($"The vehicle's price is less than the summ of its features!",
                         new[] { validationContext.MemberName });
                 }
             }

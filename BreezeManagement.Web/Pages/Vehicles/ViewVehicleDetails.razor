@@ -1,8 +1,7 @@
-﻿@page "/editvehicle/{id:int}"
+﻿@page "/vehicleview/{id:int}"
 
 @inject NavigationManager NavigationManager
 @inject IViewVehiclesByIdUseCase ViewVehicleByIdUseCase
-@inject IEditVehicleUseCase EditVehicleUseCase
 
 @attribute [Authorize]
 
@@ -13,7 +12,7 @@
     <b style="font-size:15px">Back</b>
 </button>
 
-<br/>
+<br />
 @if (this.vehicle != null)
 {
     <EditForm Model="vehicle" OnValidSubmit="OnValidSubmit">
@@ -23,7 +22,7 @@
         <div class="page">
             <div class="field field_v1">
                 <label for="name" class="ha-screen-reader">Registration</label>
-                <InputText id="name" @bind-Value="vehicle.Registration" class="field__input" placeholder="Registration number for the vehicle"></InputText>
+                <InputText id="name" @bind-Value="vehicle.Registration" class="field__input" placeholder="Registration number for the vehicle" disabled></InputText>
                 <span class="field__label-wrap" aria-hidden="true">
                     <span class="field__label">Registration</span>
                 </span>
@@ -33,7 +32,7 @@
         <div class="page">
             <div class="field field_v1">
                 <label for="model" class="ha-screen-reader">Model Name</label>
-                <InputText id="model" @bind-Value="vehicle.ModelName" class="field__input" placeholder="Model of the vehicle"></InputText>
+                <InputText id="model" @bind-Value="vehicle.ModelName" class="field__input" placeholder="Model of the vehicle" disabled></InputText>
                 <span class="field__label-wrap" aria-hidden="true">
                     <span class="field__label">Model Name</span>
                 </span>
@@ -43,7 +42,7 @@
         <div class="page">
             <div class="field field_v1">
                 <label for="colour" class="ha-screen-reader">Colour</label>
-                <InputText id="colour" @bind-Value="vehicle.Colour" class="field__input" placeholder="Colour of the vehicle"></InputText>
+                <InputText id="colour" @bind-Value="vehicle.Colour" class="field__input" placeholder="Colour of the vehicle" disabled></InputText>
                 <span class="field__label-wrap" aria-hidden="true">
                     <span class="field__label">Colour</span>
                 </span>
@@ -53,7 +52,7 @@
         <div class="page">
             <div class="field field_v1">
                 <label for="price" class="ha-screen-reader">Price</label>
-                <InputNumber id="price" @bind-Value="vehicle.Price" class="field__input" placeholder="Price of the vehicle"></InputNumber>
+                <InputNumber id="price" @bind-Value="vehicle.Price" class="field__input" placeholder="Price of the vehicle" disabled></InputNumber>
                 <span class="field__label-wrap" aria-hidden="true">
                     <span class="field__label">Price</span>
                 </span>
@@ -63,7 +62,7 @@
         <div class="page">
             <div class="field field_v1">
                 <label for="dom" class="ha-screen-reader">Date Of Manufacture</label>
-                <InputDate id="dom" @bind-Value="vehicle.DateOfManufacture" class="field__input" placeholder="Date of manufacture"></InputDate>
+                <InputDate id="dom" @bind-Value="vehicle.DateOfManufacture" class="field__input" placeholder="Date of manufacture" disabled></InputDate>
                 <span class="field__label-wrap" aria-hidden="true">
                     <span class="field__label">Date Of Manufacture</span>
                 </span>
@@ -73,7 +72,7 @@
         <div class="page">
             <div class="field field_v1">
                 <label for="owners" class="ha-screen-reader">Number Of Owners</label>
-                <InputNumber id="owners" @bind-Value="vehicle.NumberOfOwners" class="field__input" placeholder="Number of previous owners"></InputNumber>
+                <InputNumber id="owners" @bind-Value="vehicle.NumberOfOwners" class="field__input" placeholder="Number of previous owners" disabled></InputNumber>
                 <span class="field__label-wrap" aria-hidden="true">
                     <span class="field__label">Number Of Owners</span>
                 </span>
@@ -83,27 +82,31 @@
         <div class="page">
             <div class="field field_v1">
                 <label for="miles" class="ha-screen-reader">Mileage</label>
-                <InputNumber id="miles" @bind-Value="vehicle.Mileage" class="field__input" placeholder="Vehicle mileage"></InputNumber>
+                <InputNumber id="miles" @bind-Value="vehicle.Mileage" class="field__input" placeholder="Vehicle mileage" disabled></InputNumber>
                 <span class="field__label-wrap" aria-hidden="true">
                     <span class="field__label">Mileage</span>
                 </span>
             </div>
         </div>
 
-        <VehicleFeaturesComponent
-            VehicleFeatures="vehicle.VehicleFeatures"
-            OnFeatureSelected="OnFeatureSelected"
-        ></VehicleFeaturesComponent>
-
-        <br />
-        <div class="page">
-            <button class="button-save" type="submit">
-                <div class="icon">
-                    <i class="fa-solid fa-floppy-disk"></i>
-                </div>
-                <b style="font-size:15px">Save</b>
-            </button>
+        <div class="container" style="position:center">
+            <h5><u>Additional Features</u></h5>
+         <table class="table">
+             <thead>
+                 <tr>
+                     <th>Name</th>
+                     <th>Description</th>
+                     <th>Cost</th>
+                     <th></th>
+                 </tr>
+             </thead>
+        @foreach (var v in vehicle.VehicleFeatures)
+        {
+            <FeatureItemComponentViewOnly Feature="v.Feature"></FeatureItemComponentViewOnly>
+        }
+         </table>
         </div>
+        <br />
 
     </EditForm>
 }
@@ -119,14 +122,8 @@
         this.vehicle = await ViewVehicleByIdUseCase.ExecuteAsync(this.Id);
     }
 
-    private void OnFeatureSelected(List<VehicleFeature> vehicleFeatures)
-    {
-        this.vehicle.VehicleFeatures = vehicleFeatures;
-    }
-
     private void OnValidSubmit()
     {
-        EditVehicleUseCase.ExecuteAsync(this.vehicle);
         NavigationManager.NavigateTo("/vehicles");
     }
 

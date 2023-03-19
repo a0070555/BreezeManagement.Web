@@ -5,7 +5,13 @@
 
 @attribute [Authorize]
 
-<h3>Add Staff</h3>
+<button class="button-save" @onclick=GoBack>
+    <div class="icon">
+        <i class="fa-solid fa-arrow-left"></i>
+    </div>
+    <b style="font-size:15px">Back</b>
+</button>
+
 <br/>
 @if (staff != null)
 {
@@ -124,5 +130,10 @@
             await AddStaffUseCase.ExecuteAsync(this.staff);
             NavigationManager.NavigateTo("/staff");
         }
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/staff");
     }
 }

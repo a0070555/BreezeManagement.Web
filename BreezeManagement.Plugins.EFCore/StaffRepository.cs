@@ -29,12 +29,22 @@ namespace BreezeManagement.Plugins.EFCore
 
         public async Task AddStaffAsync(Staff staff)
         {
+            if (db.Staff.Any(x => x.Email.ToLower() == staff.Email.ToLower() && x.IsDeleted == false))
+            {
+                return;
+            }
+
             this.db.Staff.Add(staff);
             await this.db.SaveChangesAsync();
         }
 
         public async Task UpdateStaffAsync(Staff staff)
         {
+            if (db.Staff.Any(x => x.Email.ToLower() == staff.Email.ToLower() && x.IsDeleted == false))
+            {
+                return;
+            }
+
             var sf = await this.db.Staff.FindAsync(staff.StaffId);
             if (sf != null)
             {

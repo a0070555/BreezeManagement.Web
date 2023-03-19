@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Server.IISIntegration;
 
 namespace BreezeManagement.Plugins.EFCore
 {
@@ -37,9 +38,12 @@ namespace BreezeManagement.Plugins.EFCore
 
         public async Task UpdateFeatureAsync(Feature feature)
         {
-            //To prevent different featentories from having the same name
+            //To prevent different features from having the same name
             if (db.Features.Any(x => x.FeatureId != feature.FeatureId &&
-                                      x.FeatureName.ToLower() == feature.FeatureName.ToLower())) return;
+                                      x.FeatureName.ToLower() == feature.FeatureName.ToLower() && x.IsDeleted == false)) 
+            {
+               return;
+            }
 
             var feat = await this.db.Features.FindAsync(feature.FeatureId);
             if (feat != null)

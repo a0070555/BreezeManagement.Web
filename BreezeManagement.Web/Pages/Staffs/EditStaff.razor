@@ -6,7 +6,13 @@
 
 @attribute [Authorize]
 
-<h3>Edit Staff</h3>
+<button class="button-save" @onclick=GoBack>
+    <div class="icon">
+        <i class="fa-solid fa-arrow-left"></i>
+    </div>
+    <b style="font-size:15px">Back</b>
+</button>
+
 <br/>
 @if (this.staff != null)
 {
@@ -121,6 +127,11 @@
     private void OnValidSubmit()
     {
         EditStaffUseCase.ExecuteAsync(this.staff);
+        NavigationManager.NavigateTo("/staff");
+    }
+
+    private void GoBack()
+    {
         NavigationManager.NavigateTo("/staff");
     }
 }

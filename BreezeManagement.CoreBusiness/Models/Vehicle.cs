@@ -44,6 +44,7 @@ namespace BreezeManagement.CoreBusiness.Models
             return this.VehicleFeatures.Sum(x => x.Feature?.AddedPrice ?? 0);
         }
 
+        //Ensure price of vehicle is greater than features within it
         public bool ValidatePricing()
         {
             if (VehicleFeatures == null || VehicleFeatures.Count <= 0)

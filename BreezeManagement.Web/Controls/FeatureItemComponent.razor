@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager NavigationManager
 @inject IDeleteFeatureUseCase DeleteFeatureUseCase
+@inject IJSRuntime JsRuntime
 
 @if (Feature != null)
 {
@@ -34,9 +35,13 @@
 
     private async Task DeleteFeature(Feature feature)
     {
-        await DeleteFeatureUseCase.ExecuteAsync(feature.FeatureId);
 
-        await OnFeatureDeleted.InvokeAsync();
+        if(await JsRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete {feature.FeatureName}?"))
+        {
+            await DeleteFeatureUseCase.ExecuteAsync(feature.FeatureId);
+
+            await OnFeatureDeleted.InvokeAsync();
+        }   
     }
 
 }

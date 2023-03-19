@@ -5,7 +5,13 @@
 @inject IAddFeatureUseCase AddFeatureUseCase
 @inject NavigationManager NavigationManager
 
-<h3>Add Feature</h3>
+<button class="button-save" @onclick=GoBack>
+    <div class="icon">
+        <i class="fa-solid fa-arrow-left"></i>
+    </div>
+    <b style="font-size:15px">Back</b>
+</button>
+
 <br/>
 @if (feature != null)
 {
@@ -72,5 +78,10 @@
             await AddFeatureUseCase.ExecuteAsync(this.feature);
             NavigationManager.NavigateTo("/features");
         }
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/features");
     }
 }

@@ -5,7 +5,9 @@
 @inject NavigationManager NavigationManager
 @inject IViewFeaturesByNameUseCase ViewFeaturesByNameUseCase
 
+
 <h3>Features</h3>
+
 <br/>
 <ViewFeaturesComponent
     OnSearchFeatures="OnSearchFeatures"></ViewFeaturesComponent>
@@ -39,8 +41,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var feats = await ViewFeaturesByNameUseCase.ExecuteAsync();
-        this.listFeatures = feats.ToList();
+        await LoadFeatures();
 
     }
 

@@ -22,6 +22,7 @@ namespace BreezeManagement.Plugins.EFCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Test data
             modelBuilder.Entity<VehicleFeature>()
                 .HasKey(vf => new { vf.VehicleId, vf.FeatureId });
 

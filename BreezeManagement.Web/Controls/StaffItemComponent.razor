@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager NavigationManager
 @inject IDeleteStaffUseCase DeleteStaffUseCase
+@inject IJSRuntime JsRuntime
 
 @if (Staff != null)
 {
@@ -37,8 +38,12 @@
 
     private async Task DeleteStaff(Staff staff)
     {
-        await DeleteStaffUseCase.ExecuteAsync(staff.StaffId);
+        if (await JsRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete {staff.FullName}?"))
+        {
+           await DeleteStaffUseCase.ExecuteAsync(staff.StaffId);
 
-        await OnStaffDeleted.InvokeAsync();
+        await OnStaffDeleted.InvokeAsync(); 
+        }
+        
     }
 }

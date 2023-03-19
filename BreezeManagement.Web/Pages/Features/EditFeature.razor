@@ -6,7 +6,12 @@
 @inject IViewFeaturesByIdUseCase ViewFeaturesByIdUseCase
 @inject IEditFeatureUseCase EditFeatureUseCase
 
-<h3>Edit Feature</h3>
+<button class="button-save" @onclick=GoBack>
+    <div class="icon">
+        <i class="fa-solid fa-arrow-left"></i>
+    </div>
+    <b style="font-size:15px">Back</b>
+</button>
 
 @if (this.feature != null)
 {
@@ -58,7 +63,7 @@
 
 @code {
     private Feature feature;
-    
+
     [Parameter]
     public int Id { get; set; }
 
@@ -69,7 +74,12 @@
 
     public async Task OnValidSubmit()
     {
-            await EditFeatureUseCase.ExecuteAsync(this.feature);
-            NavigationManager.NavigateTo("/features");
+        await EditFeatureUseCase.ExecuteAsync(this.feature);
+        NavigationManager.NavigateTo("/features");
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/features");
     }
 }

@@ -1,0 +1,24 @@
+﻿@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+@if (Vehicle != null)
+{
+    <tr>
+        <td>@Vehicle.Registration</td>
+        <td>@Vehicle.ModelName</td>
+        <td>@Vehicle.Colour</td>
+        <td>@Vehicle.Price.ToString("c")</td>
+        <td>@Vehicle.DateOfManufacture</td>
+        <td>@Vehicle.NumberOfOwners</td>
+        <td>@Vehicle.Mileage</td>
+        <td></td>
+    </tr>
+}
+
+
+@code {
+
+    [Parameter]
+    public Vehicle? Vehicle { get; set; }
+
+}

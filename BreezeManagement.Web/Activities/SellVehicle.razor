@@ -7,6 +7,8 @@
 @inject AuthenticationStateProvider AuthState
 @inject IJSRuntime JsRuntime
 
+@attribute [Authorize]
+
 <ErrorMessageComponent ErrorMessage="@errorMessage"></ErrorMessageComponent>
 <h3>Sell Vehicle</h3>
 <br/>
@@ -74,6 +76,7 @@
     {
         SellVehicleUseCase.ExecuteAsync(this.sellViewModel.SalesOrderNumber,
             this.selectedVehicle,
+            this.sellViewModel.VehiclePrice,
             Username
         );
 
