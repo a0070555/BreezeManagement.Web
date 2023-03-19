@@ -60,7 +60,7 @@ namespace BreezeManagement.Plugins.EFCore
         public async Task UpdateVehicleAsync(Vehicle vehicle)
         {
             //prevents same name
-            if (db.Vehicles.Any(x => x.Registration.ToLower() == vehicle.Registration.ToLower()))
+            if (db.Vehicles.Any(x => x.Registration.ToLower() == vehicle.Registration.ToLower() && x.VehicleId != vehicle.VehicleId))
             {
                 return;
             }

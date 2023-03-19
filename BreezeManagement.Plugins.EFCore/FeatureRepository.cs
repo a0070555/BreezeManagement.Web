@@ -27,7 +27,7 @@ namespace BreezeManagement.Plugins.EFCore
         public async Task AddFeatureAsync(Feature feature)
         {
             //To prevent different features from having the same name
-            if (db.Features.Any(x => x.FeatureName.ToLower() == feature.FeatureName.ToLower() && x.IsDeleted == false))
+            if (db.Features.Any(x => x.FeatureName.ToLower() == feature.FeatureName.ToLower() && x.IsDeleted == false && x.FeatureId != feature.FeatureId))
             {
                 return;
             }

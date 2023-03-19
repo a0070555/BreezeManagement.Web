@@ -40,7 +40,7 @@ namespace BreezeManagement.Plugins.EFCore
 
         public async Task UpdateStaffAsync(Staff staff)
         {
-            if (db.Staff.Any(x => x.Email.ToLower() == staff.Email.ToLower() && x.IsDeleted == false))
+            if (db.Staff.Any(x => x.Email.ToLower() == staff.Email.ToLower() && x.IsDeleted == false && x.StaffId != staff.StaffId))
             {
                 return;
             }
