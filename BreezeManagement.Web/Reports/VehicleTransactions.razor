@@ -53,7 +53,7 @@
                 @foreach (var pt in vehicleTransactions)
                 {
                     <tr>
-                        <td>@pt.TransactionDate.ToString("dd/mm/yyyy hh:mm tt")</td>
+                        <td>@pt.TransactionDate</td>
                         <td>@pt.Vehicle.Registration</td>
                         <td>@pt.SalesOrderNumber</td>
                         <td>@pt.UnitPrice</td>
